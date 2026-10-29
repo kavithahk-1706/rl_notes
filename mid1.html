@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reinforcement Learning — Exam Prep</title>
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+</head>
+<body>
+<div class="page-wrapper">
+
+  <header class="site-header">
+    <h1>Reinforcement Learning</h1>
+    <p>Exam Prep · 12 Question Bank (Q7 skipped) · Units I, II &amp; III</p>
+  </header>
+
+  <div class="study-banner">
+    <strong>Strategy:</strong> Attempt 3 of 4 questions, one guaranteed per unit. Skip <span class="skip">Q7 (EXP3)</span> — not in reference material, mathematically heavy, and isolated (no carryover to other questions).<br>
+    <strong>Study order:</strong> Q11 → Q12 → Q3 → Q4 → Q2 → Q9 → Q8 → Q10 → Q5 → Q1 → Q6
+  </div>
+
+  <!-- Section nav -->
+  <div class="section-nav">
+    <button class="section-btn active" onclick="showSection('s1')">Unit I — Q1–5</button>
+    <button class="section-btn" onclick="showSection('s2')">Unit II — Q6–10</button>
+    <button class="section-btn" onclick="showSection('s3')">Unit III — Q11–12</button>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       UNIT I — Q1 to Q5
+  ═══════════════════════════════════════════════ -->
+  <div class="section-panel active" id="s1">
+    <div class="tabs" role="tablist">
+      <button class="tab-btn active" onclick="showTab('s1',0)">Q1 · RL vs SL vs UL</button>
+      <button class="tab-btn" onclick="showTab('s1',1)">Q2 · Key Elements</button>
+      <button class="tab-btn" onclick="showTab('s1',2)">Q3 · Explore vs Exploit</button>
+      <button class="tab-btn" onclick="showTab('s1',3)">Q4 · MAB &amp; Regret</button>
+      <button class="tab-btn" onclick="showTab('s1',4)">Q5 · PAC Learning</button>
+    </div>
+
+    <!-- Q1 -->
+    <div class="tab-content active" id="s1-tab-0">
+      <div class="question-block">
+        <h2 class="q-title">Q1. Compare Reinforcement Learning, Supervised Learning, and Unsupervised Learning with suitable examples. <span class="marks-badge">5M</span></h2>
+        <div class="answer-body">
+
+          <h3>The Three Paradigms</h3>
+          <p>Machine Learning is broadly split into three paradigms based on <strong>what kind of feedback the learner gets</strong>. Supervised Learning learns from labeled input-output pairs, Unsupervised Learning finds structure in unlabeled data, and Reinforcement Learning learns by interacting with an environment and receiving reward signals for its actions rather than being told the "correct" answer directly.</p>
+
+          <h3>Supervised Learning (SL)</h3>
+          <p>The model is trained on a dataset of \((x, y)\) pairs — each input has a known correct output (label) — and learns a mapping \(f: x \to y\) that minimizes prediction error on that labeled data.</p>
+          <p><em>Example: Given thousands of labeled images of "cat" and "dog," train a classifier to predict the correct label for a new, unseen image.</em></p>
+
+          <h3>Unsupervised Learning (UL)</h3>
+          <p>The model is given only inputs \(x\), with <strong>no labels at all</strong>, and must discover hidden structure, patterns, or groupings on its own — there is no "correct answer" to be evaluated against.</p>
+          <p><em>Example: Clustering customers into groups based on purchasing behavior without being told in advance what the groups should be (e.g. K-Means clustering).</em></p>
+
+          <h3>Reinforcement Learning (RL)</h3>
+          <p>An <strong>agent</strong> interacts with an <strong>environment</strong> over time, taking actions and receiving <strong>rewards or penalties</strong>. There is no dataset of correct answers handed over upfront — the agent generates its own experience through trial and error, and learns a policy that maximizes cumulative reward.</p>
+          <p><em>Example: A robot learning to navigate a maze — it isn't told the correct move at each cell, it discovers a good path by trying moves and observing which ones lead toward the goal (positive reward) versus into a wall (negative reward).</em></p>
+
+          <div class="svg-wrap">
+            <svg viewBox="0 0 720 210" xmlns="http://www.w3.org/2000/svg">
+              <rect x="20" y="30" width="200" height="150" rx="8" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5"/>
+              <text x="120" y="55" fill="var(--accent-hover)" font-size="12" font-weight="700" text-anchor="middle">Supervised</text>
+              <text x="120" y="90" fill="var(--text-muted)" font-size="10.5" text-anchor="middle">Labeled (x, y) pairs</text>
+              <text x="120" y="110" fill="var(--text-muted)" font-size="10.5" text-anchor="middle">Learn x → y mapping</text>
+              <text x="120" y="130" fill="var(--text-muted)" font-size="10.5" text-anchor="middle">Feedback: correct label</text>
+              <text x="120" y="155" fill="var(--success)" font-size="10" text-anchor="middle">e.g. Image classification</text>
+
+              <rect x="260" y="30" width="200" height="150" rx="8" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5"/>
+              <text x="360" y="55" fill="var(--accent-hover)" font-size="12" font-weight="700" text-anchor="middle">Unsupervised</text>
+              <text x="360" y="90" fill="var(--text-muted)" font-size="10.5" text-anchor="middle">Unlabeled x only</text>
+              <text x="360" y="110" fill="var(--text-muted)" font-size="10.5" text-anchor="middle">Find hidden structure</text>
+              <text x="360" y="130" fill="var(--text-muted)" font-size="10.5" text-anchor="middle">Feedback: none</text>
+              <text x="360" y="155" fill="var(--success)" font-size="10" text-anchor="middle">e.g. Customer clustering</text>
+
+              <rect x="500" y="30" width="200" height="150" rx="8" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5"/>
+              <text x="600" y="55" fill="var(--accent-hover)" font-size="12" font-weight="700" text-anchor="middle">Reinforcement</text>
+              <text x="600" y="90" fill="var(--text-muted)" font-size="10.5" text-anchor="middle">Agent + Environment</text>
+              <text x="600" y="110" fill="var(--text-muted)" font-size="10.5" text-anchor="middle">Learn via trial &amp; error</text>
+              <text x="600" y="130" fill="var(--text-muted)" font-size="10.5" text-anchor="middle">Feedback: reward signal</text>
+              <text x="600" y="155" fill="var(--success)" font-size="10" text-anchor="middle">e.g. Maze-solving robot</text>
+            </svg>
+            <p class="svg-caption">Fig 1.1 — The three ML paradigms differ mainly in what feedback signal drives learning</p>
+          </div>
+
+          <h3>Side-by-Side Comparison</h3>
+          <table>
+            <tr><th>Aspect</th><th>Supervised Learning</th><th>Unsupervised Learning</th><th>Reinforcement Learning</th></tr>
+            <tr><td>Data</td><td>Labeled (x, y)</td><td>Unlabeled x</td><td>No fixed dataset — agent generates experience</td></tr>
+            <tr><td>Feedback</td><td>Correct label for every input</td><td>None</td><td>Reward/penalty, often delayed</td></tr>
+            <tr><td>Goal</td><td>Minimize prediction error</td><td>Discover structure/patterns</td><td>Maximize cumulative reward</td></tr>
+            <tr><td>Learning style</td><td>One-shot mapping from examples</td><td>Pattern discovery</td><td>Sequential decision-making over time</td></tr>
+            <tr><td>Example</td><td>Spam email classifier</td><td>K-Means customer segmentation</td><td>Chess-playing agent, self-driving car</td></tr>
+          </table>
+
+          <h3>Key Distinguishing Factor of RL</h3>
+          <p>The single biggest difference is that in RL, the "correct answer" is never handed over directly — the agent must discover good behavior through the consequences of its own actions, and rewards can be <strong>delayed</strong> (a good move now might only pay off many steps later). This makes RL fundamentally about <em>sequential decision-making under uncertainty</em>, unlike the largely one-shot prediction problems SL and UL solve.</p>
+
+          <div class="callout good">
+            <strong>Key takeaway:</strong> SL learns from answers, UL learns from structure, RL learns from consequences. RL is the only one of the three where the learner's own choices actively shape the data it learns from next.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="tab-content" id="s1-tab-1">
+      <div class="question-block">
+        <h2 class="q-title">Q2. Explain the key elements of Reinforcement Learning: Agent, Environment, State, Action, Reward, Policy, and Value Function. <span class="marks-badge">5M</span></h2>
+        <div class="answer-body">
+
+          <h3>Overview</h3>
+          <p>Every RL problem, no matter the domain, is built from the same seven core components. Understanding how they connect is the foundation for everything else in this course — the Bellman equations (Q11/Q12), MDPs (Q9), and bandit algorithms (Q3/Q4) are all just formal machinery built on top of these ideas.</p>
+
+          <div class="svg-wrap">
+            <svg viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg">
+              <rect x="40" y="90" width="150" height="60" rx="8" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5"/>
+              <text x="115" y="115" fill="var(--accent-hover)" font-size="13" font-weight="700" text-anchor="middle">Agent</text>
+              <text x="115" y="133" fill="var(--text-muted)" font-size="10" text-anchor="middle">(policy π)</text>
+
+              <rect x="510" y="90" width="150" height="60" rx="8" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5"/>
+              <text x="585" y="115" fill="var(--accent-hover)" font-size="13" font-weight="700" text-anchor="middle">Environment</text>
+              <text x="585" y="133" fill="var(--text-muted)" font-size="10" text-anchor="middle">(state s)</text>
+
+              <line x1="190" y1="105" x2="510" y2="105" stroke="var(--warning)" stroke-width="1.8" marker-end="url(#q2a)"/>
+              <text x="350" y="95" fill="var(--warning)" font-size="11" text-anchor="middle">Action (A)</text>
+
+              <line x1="510" y1="135" x2="190" y2="135" stroke="var(--success)" stroke-width="1.8" marker-end="url(#q2a)"/>
+              <text x="350" y="155" fill="var(--success)" font-size="11" text-anchor="middle">Reward (R) + New State (S')</text>
+
+              <text x="350" y="215" fill="var(--text-muted)" font-size="11" text-anchor="middle">Value Function V(s) / Q(s,a) estimates how good states/actions are</text>
+              <text x="350" y="235" fill="var(--text-muted)" font-size="11" text-anchor="middle">under the agent's Policy π</text>
+
+              <defs>
+                <marker id="q2a" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="var(--text-dim)"/></marker>
+              </defs>
+            </svg>
+            <p class="svg-caption">Fig 2.1 — The Agent–Environment interaction loop</p>
+          </div>
+
+          <h3>1. Agent</h3>
+          <p>The <strong>learner or decision-maker</strong> that interacts with the environment. It observes the current state, chooses an action, receives a reward, and learns from experience. <em>Examples: a robot navigating a maze, a chess-playing program, a self-driving car's control system.</em></p>
+
+          <h3>2. Environment</h3>
+          <p>Everything <strong>outside the agent</strong> that it interacts with. It receives the agent's action, changes its own state in response, and provides a reward/penalty back. <em>Examples: a chessboard for a chess AI, a road network for a self-driving car.</em></p>
+
+          <h3>3. State (S)</h3>
+          <p>The <strong>current situation</strong> of the environment at a given time — it contains all the information the agent needs to make its next decision, and it changes after every action taken. <em>Examples: a robot's position in a room, the current board configuration in chess.</em></p>
+
+          <h3>4. Action (A)</h3>
+          <p>A <strong>decision or move</strong> the agent takes. Actions influence both future states (what happens next in the environment) and future rewards (what feedback the agent gets). <em>Examples: Move Up/Down/Left/Right for a robot; Accelerate/Brake/Turn for a car.</em></p>
+
+          <h3>5. Reward (R)</h3>
+          <p><strong>Feedback</strong> from the environment after an action, telling the agent whether that action was good (positive reward) or bad (negative reward/penalty). The agent's entire objective is to maximize the total cumulative reward over time, not just any single reward.</p>
+          <table>
+            <tr><th>Action</th><th>Reward</th></tr>
+            <tr><td>Reach Goal</td><td>+100</td></tr>
+            <tr><td>Move Correctly</td><td>+1</td></tr>
+            <tr><td>Hit Obstacle</td><td>−10</td></tr>
+          </table>
+
+          <h3>6. Policy (π)</h3>
+          <p>The agent's <strong>strategy</strong> for choosing actions in each state — a mapping from states to actions. It can be <strong>deterministic</strong> (\(\pi(s) = a\), exactly one action per state) or <strong>stochastic</strong> (\(\pi(a \mid s)\), a probability distribution over actions given a state).</p>
+          <table>
+            <tr><th>Type</th><th>Example</th></tr>
+            <tr><td>Deterministic</td><td>Red Light → Stop, Green Light → Go</td></tr>
+            <tr><td>Stochastic</td><td>At an intersection: 70% Go Left, 20% Go Right, 10% Go Straight</td></tr>
+          </table>
+
+          <h3>7. Value Function</h3>
+          <p>A <strong>Value Function</strong> estimates how good a state or action is, in terms of <em>expected future reward</em> — not just the immediate reward. This matters because an action with a small immediate reward can lead to a much larger future payoff (e.g. Path B in a maze gives no immediate reward but leads to a goal worth +100, while Path A gives +5 immediately but is a dead end). There are two types:</p>
+          <ul>
+            <li><strong>State-Value Function \(V^\pi(s)\):</strong> how good is it to be in state \(s\), following policy π thereafter.</li>
+            <li><strong>Action-Value Function \(Q^\pi(s,a)\):</strong> how good is it to take action \(a\) in state \(s\), then follow policy π thereafter.</li>
+          </ul>
+
+          <h3>Putting It All Together — The Interaction Cycle</h3>
+          <ol>
+            <li>Agent observes State (S)</li>
+            <li>Agent chooses Action (A), guided by its Policy (π)</li>
+            <li>Environment changes in response</li>
+            <li>Environment provides Reward (R)</li>
+            <li>Agent observes New State (S′)</li>
+            <li>Agent updates its Policy (π) / Value estimates using the new experience</li>
+            <li>Repeat</li>
+          </ol>
+
+          <div class="callout good">
+            <strong>Key takeaway:</strong> Agent and Environment interact through Action, State, and Reward; Policy tells the agent what to do; Value Function tells the agent how good doing it actually is in the long run. Every RL algorithm is ultimately about improving the Policy using better and better Value Function estimates.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="tab-content" id="s1-tab-2">
+      <div class="question-block">
+        <h2 class="q-title">Q3. Discuss the Exploration vs Exploitation trade-off. Why is it important in Reinforcement Learning? <span class="marks-badge">5M</span></h2>
+        <div class="answer-body">
+
+          <h3>The Core Dilemma</h3>
+          <p>One of the most fundamental challenges in Reinforcement Learning is balancing two competing needs: <strong>Exploration</strong> — trying new actions to discover potentially better rewards — and <strong>Exploitation</strong> — choosing the action that currently appears to give the highest reward, based on what the agent already knows. Both are necessary, but they pull in opposite directions, and an agent only has a limited amount of time/tokens/attempts to figure out the right balance.</p>
+
+          <h3>Exploration</h3>
+          <p>The agent experiments with different, possibly untested actions instead of always going with its current best guess.</p>
+          <ul>
+            <li><strong>Advantages:</strong> discovers new opportunities, prevents getting stuck in a suboptimal solution, improves long-term learning.</li>
+            <li><strong>Example:</strong> A delivery robot knows one route to a destination but occasionally tries other routes to see if a shorter one exists.</li>
+          </ul>
+
+          <h3>Exploitation</h3>
+          <p>The agent uses its existing knowledge to maximize reward right now, without experimenting further.</p>
+          <ul>
+            <li><strong>Advantages:</strong> gains immediate rewards, uses learned experience efficiently.</li>
+            <li><strong>Example:</strong> A chess-playing AI repeatedly plays the move that has historically produced the best results against this opponent.</li>
+          </ul>
+
+          <h3>What Goes Wrong at Either Extreme</h3>
+          <table>
+            <tr><th>If the agent...</th><th>Consequence</th></tr>
+            <tr><td>Explores too much</td><td>Wastes time trying poor actions; receives lower rewards, especially early on</td></tr>
+            <tr><td>Exploits too much</td><td>May miss better actions entirely; can get permanently stuck in a local optimum</td></tr>
+          </table>
+
+          <div class="svg-wrap">
+            <svg viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg">
+              <text x="350" y="25" fill="var(--accent-hover)" font-size="13" font-weight="700" text-anchor="middle">The Trade-off</text>
+              <rect x="60" y="55" width="220" height="100" rx="8" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5"/>
+              <text x="170" y="90" fill="var(--accent-hover)" font-size="13" font-weight="700" text-anchor="middle">Exploration</text>
+              <text x="170" y="112" fill="var(--text-muted)" font-size="10.5" text-anchor="middle">Try new actions</text>
+              <text x="170" y="128" fill="var(--text-muted)" font-size="10.5" text-anchor="middle">Risk: short-term loss</text>
+              <text x="170" y="144" fill="var(--success)" font-size="10.5" text-anchor="middle">Gain: better long-term info</text>
+
+              <rect x="420" y="55" width="220" height="100" rx="8" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5"/>
+              <text x="530" y="90" fill="var(--accent-hover)" font-size="13" font-weight="700" text-anchor="middle">Exploitation</text>
+              <text x="530" y="112" fill="var(--text-muted)" font-size="10.5" text-anchor="middle">Use known-best action</text>
+              <text x="530" y="128" fill="var(--text-muted)" font-size="10.5" text-anchor="middle">Risk: stuck at local optimum</text>
+              <text x="530" y="144" fill="var(--success)" font-size="10.5" text-anchor="middle">Gain: immediate reward</text>
+
+              <line x1="280" y1="105" x2="420" y2="105" stroke="var(--warning)" stroke-width="2" stroke-dasharray="5,3"/>
+              <text x="350" y="185" fill="var(--warning)" font-size="11" text-anchor="middle">A good agent balances both continuously</text>
+            </svg>
+            <p class="svg-caption">Fig 3.1 — Exploration and Exploitation pull in opposite directions; neither alone is optimal</p>
+          </div>
+
+          <h3>Everyday Example: Restaurant Selection</h3>
+          <p>Suppose you have five restaurants to choose from. <strong>Exploitation</strong> means always visiting your favorite restaurant because you know the food is good. <strong>Exploration</strong> means occasionally trying a new one — you might discover something even better than your current favorite, or you might waste a meal on something bad. This restaurant dilemma is structurally identical to how an RL agent picks between actions/slot machines.</p>
+
+          <h3>Example: Self-Driving Car</h3>
+          <table>
+            <tr><th>Situation</th><th>Exploration</th><th>Exploitation</th></tr>
+            <tr><td>Route Planning</td><td>Try new routes</td><td>Use best-known route</td></tr>
+            <tr><td>Speed Control</td><td>Test different speeds</td><td>Use optimal speed</td></tr>
+            <tr><td>Lane Selection</td><td>Experiment with lanes</td><td>Stay in best lane</td></tr>
+          </table>
+
+          <h3>Why This Matters in RL Specifically</h3>
+          <p>This trade-off is uniquely important in RL (compared to supervised learning) because RL agents generate their own training data through the actions they choose — there's no fixed labeled dataset to learn from. If the agent never explores, it can only ever learn about actions it already happens to prefer, so its knowledge of the environment stays permanently incomplete and it can lock onto a mediocre strategy forever, as demonstrated by the failure of the pure Greedy method (Q4). Balancing exploration and exploitation well is what allows an agent to converge toward the truly optimal policy rather than a merely "good enough" one.</p>
+
+          <h3>Solutions Used in Practice</h3>
+          <p>Common strategies for managing this trade-off include the <strong>ε-Greedy method</strong> (mostly exploit, occasionally explore at random), <strong>Optimistic Initial Values</strong> (start every action looking attractive to force early exploration), and <strong>UCB — Upper Confidence Bound</strong> (explore purposefully by favoring actions with high uncertainty rather than purely random exploration). These are covered in more depth in Q4.</p>
+
+          <div class="callout good">
+            <strong>Key takeaway:</strong> Exploration gathers information for the future; exploitation cashes in on information already gathered. RL is fundamentally about learning by interacting with an unknown environment, so an agent that only does one or the other will either learn too slowly or never discover the truly best strategy.
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Q4 -->
+    <div class="tab-content" id="s1-tab-3">
+      <div class="question-block">
+        <h2 class="q-title">Q4. Formulate the Multi-Armed Bandit problem and explain regret minimization. <span class="marks-badge">5M</span></h2>
+        <div class="answer-body">
+
+          <h3>Formulating the Multi-Armed Bandit Problem</h3>
+          <p>The <strong>Multi-Armed Bandit (MAB)</strong> problem is a simplified Reinforcement Learning problem — named after a casino "one-armed bandit" slot machine — where an agent repeatedly chooses one action ("arm") from a fixed set of \(K\) arms to maximize total reward. Formally, there is a set of arms \(A = \{1, 2, \dots, K\}\), and each arm \(a\) has an unknown true expected reward (its <strong>action-value</strong>):</p>
+          <div class="formula-block">\[ q^*(a) = \mathbb{E}[R \mid A = a] \]</div>
+          <p>At each time step \(t = 1, 2, \dots, T\), the agent selects an action \(A_t\), receives a reward \(R_t\), and updates its estimate \(Q_t(a)\) of that arm's value. Crucially, unlike a full MDP, there is <strong>only one state</strong> — the agent's choice never changes "where" it is, only which arm it pulls. This is what makes MAB the simplest possible RL setting, and the natural place to first study the exploration-exploitation trade-off (Q3).</p>
+
+          <h3>The Core Challenge</h3>
+          <p>The true action-values \(q^*(a)\) are unknown to the agent. It only knows the available arms and can observe rewards after pulling them — so it must simultaneously <strong>explore</strong> (try arms to learn their values) and <strong>exploit</strong> (play the arm currently believed to be best), as covered in Q3.</p>
+
+          <h3>Estimating Action-Values Incrementally</h3>
+          <p>Rather than storing every past reward and recomputing an average from scratch, the agent updates its estimate incrementally using:</p>
+          <div class="formula-block">\[ Q_{n+1}(a) = Q_n(a) + \frac{1}{N(a)}\big[R - Q_n(a)\big] \]</div>
+          <p>where \(N(a)\) is the number of times arm \(a\) has been played. This lets the agent maintain just two numbers per arm (\(Q(a)\) and \(N(a)\)) instead of an ever-growing history, making learning memory-efficient.</p>
+
+          <h3>What Is Regret?</h3>
+          <p><strong>Regret</strong> measures how much reward the agent loses by not always choosing the truly optimal arm. It is the standard way to measure how "good" a bandit algorithm is, since we usually can't directly measure "correctness" of a policy in this setting.</p>
+          <p><strong>Instantaneous Regret</strong> at time \(t\) is the gap between the best possible expected reward and what was actually obtained:</p>
+          <div class="formula-block">\[ \text{regret}_t = q^*(a^*) - q^*(A_t), \quad \text{where } a^* = \arg\max_a q^*(a) \]</div>
+          <p><strong>Cumulative Regret</strong> over \(T\) rounds sums this loss across the whole run:</p>
+          <div class="formula-block">\[ \text{Regret}(T) = \sum_{t=1}^{T} \big[q^*(a^*) - q^*(A_t)\big] \]</div>
+
+          <div class="svg-wrap">
+            <svg viewBox="0 0 700 210" xmlns="http://www.w3.org/2000/svg">
+              <text x="350" y="24" fill="var(--accent-hover)" font-size="12.5" font-weight="700" text-anchor="middle">Cumulative Regret Over Time</text>
+              <line x1="60" y1="180" x2="640" y2="180" stroke="var(--text-dim)" stroke-width="1.5"/>
+              <line x1="60" y1="180" x2="60" y2="30" stroke="var(--text-dim)" stroke-width="1.5"/>
+              <text x="30" y="180" fill="var(--text-muted)" font-size="10" text-anchor="middle">0</text>
+              <text x="15" y="35" fill="var(--text-muted)" font-size="10" text-anchor="middle">Regret</text>
+              <text x="640" y="200" fill="var(--text-muted)" font-size="10" text-anchor="middle">Time (T) →</text>
+
+              <path d="M60,180 L640,60" fill="none" stroke="var(--danger)" stroke-width="2"/>
+              <text x="560" y="55" fill="var(--danger)" font-size="10.5">Poor algo (linear regret)</text>
+
+              <path d="M60,180 C200,90 400,55 640,45" fill="none" stroke="var(--success)" stroke-width="2"/>
+              <text x="470" y="115" fill="var(--success)" font-size="10.5">Good algo (sub-linear, flattens out)</text>
+            </svg>
+            <p class="svg-caption">Fig 4.1 — A good bandit algorithm's cumulative regret grows sub-linearly and flattens as it learns; a bad one keeps accumulating regret forever</p>
+          </div>
+
+          <h3>Worked Example</h3>
+          <p>Suppose the optimal reward per round is 10. Over 5 pulls the agent receives 8, 9, 10, 7, 10:</p>
+          <table>
+            <tr><th>Pull</th><th>Optimal</th><th>Received</th><th>Regret</th></tr>
+            <tr><td>1</td><td>10</td><td>8</td><td>2</td></tr>
+            <tr><td>2</td><td>10</td><td>9</td><td>1</td></tr>
+            <tr><td>3</td><td>10</td><td>10</td><td>0</td></tr>
+            <tr><td>4</td><td>10</td><td>7</td><td>3</td></tr>
+            <tr><td>5</td><td>10</td><td>10</td><td>0</td></tr>
+          </table>
+          <p>Total cumulative regret = 2 + 1 + 0 + 3 + 0 = <strong>6</strong>.</p>
+
+          <h3>Regret Minimization — The Real Objective</h3>
+          <p>Maximizing total expected reward is mathematically equivalent to <strong>minimizing cumulative regret</strong> — they're two sides of the same coin. A good learning algorithm should discover the best arm quickly and avoid repeatedly choosing poor arms, so its regret grows <strong>sub-linearly</strong> with \(T\) (i.e. the rate of regret accumulation slows down as the agent learns), rather than linearly (which would mean the agent never really learns at all). This is exactly the failure mode of the pure Greedy strategy: if it locks onto a suboptimal arm early due to a lucky/unlucky reward, its regret keeps growing linearly forever since it never explores again. Algorithms like ε-Greedy, UCB, and PAC-style algorithms like Median/Successive Elimination (Q5) are all explicitly designed to achieve low, sub-linear cumulative regret.</p>
+
+          <div class="callout good">
+            <strong>Key takeaway:</strong> MAB strips RL down to just actions and rewards with no state transitions, making it the purest setting to study exploration vs exploitation. Regret quantifies the cost of not knowing the best arm in advance, and minimizing cumulative regret is the formal objective nearly every bandit algorithm is judged against.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="tab-content" id="s1-tab-4">
+      <div class="question-block">
+        <h2 class="q-title">Q5. Explain the PAC learning framework and sample complexity. <span class="marks-badge">5M</span></h2>
+        <div class="answer-body">
+
+          <h3>What Problem Does PAC Solve?</h3>
+          <p>Most bandit algorithms (ε-Greedy, UCB) try to maximize reward <em>while learning</em> — every pull matters toward the score. <strong>PAC (Probably Approximately Correct)</strong> learning asks a different question entirely: instead of "how do I earn as much reward as possible while learning," it asks <strong>"how many trials do I need before I can confidently identify a good arm?"</strong> The individual rewards earned during the process don't matter — only the final identification does. This is the philosophy behind the Median Elimination and Successive Elimination algorithms.</p>
+
+          <h3>Why "Probably Approximately Correct"?</h3>
+          <p>The name breaks into two separate relaxations of a stricter, harder-to-guarantee goal ("always find the exact best arm"):</p>
+          <ul>
+            <li><strong>Probably:</strong> the algorithm isn't required to succeed 100% of the time — it must succeed with high probability \(1 - \delta\), where \(\delta\) is the allowed probability of failure. E.g. \(\delta = 0.05\) means the algorithm succeeds with 95% probability.</li>
+            <li><strong>Approximately:</strong> the algorithm doesn't have to find the <em>exact</em> optimal arm — it's allowed to return an arm within \(\varepsilon\) (epsilon, the accuracy parameter) of the true best. E.g. if \(\varepsilon = 2\) and the optimal reward is 100, any arm with reward ≥ 98 is acceptable.</li>
+          </ul>
+          <p>Together, a <strong>PAC algorithm</strong> guarantees: "with probability at least \(1-\delta\), the arm returned has expected reward within \(\varepsilon\) of the true optimal arm's reward."</p>
+
+          <div class="svg-wrap">
+            <svg viewBox="0 0 700 170" xmlns="http://www.w3.org/2000/svg">
+              <text x="350" y="24" fill="var(--accent-hover)" font-size="13" font-weight="700" text-anchor="middle">PAC Guarantee</text>
+              <rect x="40" y="45" width="300" height="90" rx="8" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5"/>
+              <text x="190" y="75" fill="var(--accent-hover)" font-size="12" font-weight="700" text-anchor="middle">Probably</text>
+              <text x="190" y="95" fill="var(--text-muted)" font-size="10.5" text-anchor="middle">Succeeds with probability</text>
+              <text x="190" y="112" fill="var(--text-muted)" font-size="10.5" text-anchor="middle">≥ (1 − δ)</text>
+
+              <rect x="360" y="45" width="300" height="90" rx="8" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5"/>
+              <text x="510" y="75" fill="var(--accent-hover)" font-size="12" font-weight="700" text-anchor="middle">Approximately Correct</text>
+              <text x="510" y="95" fill="var(--text-muted)" font-size="10.5" text-anchor="middle">Returns arm within ε</text>
+              <text x="510" y="112" fill="var(--text-muted)" font-size="10.5" text-anchor="middle">of the true best arm</text>
+            </svg>
+            <p class="svg-caption">Fig 5.1 — PAC relaxes both certainty (allow failure prob. δ) and exactness (allow error margin ε)</p>
+          </div>
+
+          <h3>Sample Complexity</h3>
+          <p><strong>Sample complexity</strong> is the number of samples (arm pulls) an algorithm needs to guarantee its PAC bound — i.e. how many observations are required before the agent can be confident (probability \(1-\delta\)) that it has found an arm within \(\varepsilon\) of optimal. Sample complexity generally scales as:</p>
+          <ul>
+            <li><strong>Inversely with \(\varepsilon^2\):</strong> demanding tighter accuracy (smaller ε) requires quadratically more samples — this mirrors how, in the Successive Elimination confidence radius, more pulls shrink the interval width.</li>
+            <li><strong>Logarithmically with \(1/\delta\):</strong> demanding higher confidence (smaller δ) increases sample requirements only logarithmically, which is comparatively cheap.</li>
+            <li><strong>Linearly (or near-linearly) with the number of arms \(K\):</strong> more arms to distinguish between naturally requires more total samples.</li>
+          </ul>
+          <p>This gives the classic informal shape of PAC bandit sample complexity results: <em>"roughly \(O\!\left(\frac{K}{\varepsilon^2}\log\frac{1}{\delta}\right)\) samples are enough."</em></p>
+
+          <h3>Connection to Confidence Intervals</h3>
+          <p>This directly underlies why algorithms like Successive Elimination compute a <strong>confidence radius</strong> that shrinks as more samples are collected — the radius formula itself embeds the same \(\varepsilon\)-\(\delta\) trade-off, since a smaller allowed failure probability \(\delta\) widens the radius (demanding more samples to shrink back down), and Median Elimination's guarantee to return an arm within \(\varepsilon\) of optimal with probability \(1-\delta\) is a textbook PAC guarantee for the MAB setting.</p>
+
+          <h3>Why PAC Matters</h3>
+          <p>PAC framing is useful whenever the goal is <strong>identification, not online reward-maximization</strong> — for instance, running a fixed-budget A/B test to identify the best-performing website variant, or clinical trials to identify an effective treatment where individual trial outcomes matter far less than the final, confident conclusion.</p>
+
+          <div class="callout good">
+            <strong>Key takeaway:</strong> PAC learning trades certainty for probability (δ) and exactness for approximation (ε), and sample complexity tells you how many trials that trade-off costs. It reframes bandit learning from "maximize reward while learning" to "learn efficiently, then stop."
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end Unit I -->
+
+  <!-- ═══════════════════════════════════════════════
+       UNIT II — Q6 to Q10
+  ═══════════════════════════════════════════════ -->
+  <div class="section-panel" id="s2">
+    <div class="tabs" role="tablist">
+      <button class="tab-btn active" onclick="showTab('s2',0)">Q6 · Policy Gradient</button>
+      <button class="tab-btn" onclick="showTab('s2',1)">Q8 · Markov Property</button>
+      <button class="tab-btn" onclick="showTab('s2',2)">Q9 · MDP</button>
+      <button class="tab-btn" onclick="showTab('s2',3)">Q10 · Horizon &amp; Tasks</button>
+    </div>
+
+    <!-- Q6 -->
+    <div class="tab-content active" id="s2-tab-0">
+      <div class="question-block">
+        <h2 class="q-title">Q6. Explain Policy Gradient methods for Bandits with suitable examples and applications. <span class="marks-badge">5M</span></h2>
+        <div class="answer-body">
+
+          <h3>A Different Philosophy: Learning Preferences, Not Value Estimates</h3>
+          <p>ε-Greedy and UCB (Q3/Q4) both work by estimating action-values \(Q(a)\) and then picking actions based on those estimates (greedily, or with an uncertainty bonus). <strong>Policy Gradient methods</strong> take a fundamentally different approach: instead of estimating "how good is each arm," they directly learn a set of numerical <strong>preferences</strong> \(H(a)\) for each action, and convert those preferences into action probabilities — then adjust the preferences using gradient ascent on expected reward.</p>
+
+          <h3>Action Preferences and the Softmax Policy</h3>
+          <p>Each action \(a\) has a preference value \(H_t(a)\) (not a reward estimate — preferences have no natural units and only their relative size matters). The policy is a <strong>soft-max (Gibbs) distribution</strong> over these preferences:</p>
+          <div class="formula-block">\[ \pi_t(a) = \Pr\{A_t = a\} = \frac{e^{H_t(a)}}{\sum_{b=1}^{K} e^{H_t(b)}} \]</div>
+          <p>Higher preference → higher probability of being chosen, but every action retains some non-zero probability, which is what naturally drives ongoing exploration — no explicit ε or confidence-bonus term is needed.</p>
+
+          <h3>The Gradient Update Rule</h3>
+          <p>After taking action \(A_t\) and observing reward \(R_t\), preferences are updated using stochastic gradient ascent on expected reward. The standard update (using a reward baseline \(\bar{R}_t\), typically the running average reward) is:</p>
+          <div class="formula-block">\[ H_{t+1}(A_t) = H_t(A_t) + \alpha (R_t - \bar{R}_t)\big(1 - \pi_t(A_t)\big) \]</div>
+          <div class="formula-block">\[ H_{t+1}(a) = H_t(a) - \alpha (R_t - \bar{R}_t)\,\pi_t(a), \quad \text{for all } a \neq A_t \]</div>
+          <p>Intuitively: if the reward received was <strong>better than the recent average</strong> \((R_t - \bar{R}_t > 0)\), the preference for the action just taken goes <strong>up</strong>, and preferences for all other actions go <strong>down</strong> (since probabilities must sum to 1). If the reward was worse than average, the opposite happens — the taken action's preference decreases.</p>
+
+          <div class="svg-wrap">
+            <svg viewBox="0 0 700 190" xmlns="http://www.w3.org/2000/svg">
+              <text x="350" y="24" fill="var(--accent-hover)" font-size="12.5" font-weight="700" text-anchor="middle">Policy Gradient Update Loop</text>
+              <rect x="30" y="55" width="140" height="45" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5"/>
+              <text x="100" y="82" fill="var(--text)" font-size="11" text-anchor="middle">Preferences H(a)</text>
+
+              <rect x="230" y="55" width="140" height="45" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5"/>
+              <text x="300" y="82" fill="var(--text)" font-size="11" text-anchor="middle">Softmax π(a)</text>
+
+              <rect x="430" y="55" width="140" height="45" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5"/>
+              <text x="500" y="82" fill="var(--text)" font-size="11" text-anchor="middle">Sample action, get R</text>
+
+              <rect x="230" y="140" width="140" height="40" rx="6" fill="var(--surface2)" stroke="var(--warning)" stroke-width="1.5"/>
+              <text x="300" y="164" fill="var(--warning)" font-size="10.5" text-anchor="middle">Compare R to R̄, update H</text>
+
+              <line x1="170" y1="77" x2="230" y2="77" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#q6a)"/>
+              <line x1="370" y1="77" x2="430" y2="77" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#q6a)"/>
+              <line x1="500" y1="100" x2="300" y2="140" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#q6a)"/>
+              <line x1="300" y1="140" x2="120" y2="100" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#q6a)"/>
+              <defs>
+                <marker id="q6a" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="var(--text-dim)"/></marker>
+              </defs>
+            </svg>
+            <p class="svg-caption">Fig 6.1 — Preferences drive a softmax policy; observed reward vs baseline pushes preferences up or down each round</p>
+          </div>
+
+          <h3>Role of the Baseline \(\bar{R}_t\)</h3>
+          <p>The baseline is critical, not optional — without subtracting some reference reward, the sign of the update would depend on the raw reward's scale rather than whether the outcome was actually good or bad relative to what's typical. Using the running average reward as the baseline reduces the variance of the gradient estimate and speeds up convergence, without introducing bias.</p>
+
+          <h3>Worked Example</h3>
+          <p>Suppose 2 arms both start with \(H(a_1) = H(a_2) = 0\), giving \(\pi(a_1) = \pi(a_2) = 0.5\). The agent pulls \(a_1\), receives \(R_t = 8\), with running average \(\bar{R}_t = 5\). Since \(R_t - \bar{R}_t = +3 > 0\), preference \(H(a_1)\) increases and \(H(a_2)\) decreases — so \(\pi(a_1)\) rises above 0.5 on the next round, making \(a_1\) more likely to be chosen again, while still leaving \(a_2\) with nonzero probability for future exploration.</p>
+
+          <h3>Applications</h3>
+          <p>Policy gradient bandit methods scale naturally to problems with very large or continuous action spaces (where maintaining a separate \(Q(a)\) estimate per action, as UCB does, becomes impractical) — used in online advertising (learning which ad creative to show, where preferences update from click-through feedback), recommendation systems, and as the direct conceptual ancestor of full policy-gradient RL algorithms like REINFORCE used in robotics and game-playing agents.</p>
+
+          <div class="callout good">
+            <strong>Key takeaway:</strong> Policy gradient bandits skip value estimation entirely and instead directly learn action probabilities via preferences, pushed up or down by how much the observed reward beat a running baseline. This is the bandit-scale seed of the policy-gradient RL family used throughout modern deep RL.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="tab-content" id="s2-tab-1">
+      <div class="question-block">
+        <h2 class="q-title">Q8. Define Markov Property and explain Markov Chains. <span class="marks-badge">5M</span></h2>
+        <div class="answer-body">
+
+          <h3>The Markov Property</h3>
+          <p>A state \(S_t\) is said to have the <strong>Markov Property</strong> if the future is conditionally independent of the past, given the present. Formally:</p>
+          <div class="formula-block">\[ \Pr(S_{t+1} \mid S_t) = \Pr(S_{t+1} \mid S_1, S_2, \dots, S_t) \]</div>
+          <p>In plain words: <strong>"the future depends only on the present, not on the full history that led there."</strong> The current state must capture <em>all</em> the relevant information from the past needed to predict what happens next — once you know \(S_t\), knowing everything that happened before \(t\) gives you no additional predictive power. This is often summarized as the state being a "sufficient statistic" of the past.</p>
+
+          <h3>Why This Matters for RL</h3>
+          <p>The Markov Property is the foundational assumption behind almost every RL algorithm — Bellman equations (Q11/Q12), MDPs (Q9), Q-Learning — because it's exactly what allows value functions to be defined recursively in terms of only the <em>current</em> state, rather than an entire trajectory history. Without it, an agent would need to remember and condition on its complete history to make good decisions, which is generally intractable.</p>
+
+          <h3>Everyday Example</h3>
+          <p>A chess board position is (approximately) Markov: to decide the best next move, a player only needs the current arrangement of pieces — not the exact sequence of moves that produced it. In contrast, a stock price with strong momentum-based trends violates the Markov property if the current price alone doesn't reflect recent trend information relevant to prediction.</p>
+
+          <h3>What is a Markov Chain?</h3>
+          <p>A <strong>Markov Chain</strong> is a sequence of random states \(S_1, S_2, S_3, \dots\) that each satisfy the Markov property — it's a purely <em>passive</em> model (no actions, no rewards, unlike an MDP) that describes how a system moves between states over time. It's formally defined by:</p>
+          <ul>
+            <li><strong>A set of states</strong> \(S\)</li>
+            <li><strong>A transition probability matrix</strong> \(P\), where \(P_{ss'} = \Pr(S_{t+1} = s' \mid S_t = s)\) — the probability of moving from state \(s\) to state \(s'\)</li>
+          </ul>
+          <p>Every row of \(P\) sums to 1, since from any given state the chain must transition to <em>some</em> state (possibly the same one).</p>
+
+          <div class="svg-wrap">
+            <svg viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg">
+              <text x="350" y="24" fill="var(--accent-hover)" font-size="13" font-weight="700" text-anchor="middle">Simple Weather Markov Chain</text>
+              <circle cx="180" cy="120" r="55" fill="var(--surface)" stroke="var(--success)" stroke-width="2"/>
+              <text x="180" y="125" fill="var(--text)" font-size="13" text-anchor="middle">Sunny</text>
+
+              <circle cx="520" cy="120" r="55" fill="var(--surface)" stroke="var(--accent-hover)" stroke-width="2"/>
+              <text x="520" y="125" fill="var(--text)" font-size="13" text-anchor="middle">Rainy</text>
+
+              <path d="M230,105 C320,70 380,70 465,105" fill="none" stroke="var(--warning)" stroke-width="1.6" marker-end="url(#q8a)"/>
+              <text x="350" y="70" fill="var(--warning)" font-size="10.5" text-anchor="middle">P = 0.3</text>
+
+              <path d="M465,135 C380,175 320,175 230,135" fill="none" stroke="var(--warning)" stroke-width="1.6" marker-end="url(#q8a)"/>
+              <text x="350" y="192" fill="var(--warning)" font-size="10.5" text-anchor="middle">P = 0.4</text>
+
+              <path d="M155,70 C110,30 250,30 205,70" fill="none" stroke="var(--text-dim)" stroke-width="1.4" marker-end="url(#q8a)"/>
+              <text x="180" y="25" fill="var(--text-muted)" font-size="10" text-anchor="middle">P = 0.7</text>
+
+              <path d="M495,70 C450,30 590,30 545,70" fill="none" stroke="var(--text-dim)" stroke-width="1.4" marker-end="url(#q8a)"/>
+              <text x="520" y="25" fill="var(--text-muted)" font-size="10" text-anchor="middle">P = 0.6</text>
+
+              <defs>
+                <marker id="q8a" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="var(--text-dim)"/></marker>
+              </defs>
+            </svg>
+            <p class="svg-caption">Fig 8.1 — A 2-state Markov Chain: tomorrow's weather depends only on today's, not on the whole week's history</p>
+          </div>
+
+          <h3>Worked Example — Transition Matrix</h3>
+          <p>For the weather chain above, the transition matrix is:</p>
+          <table>
+            <tr><th></th><th>Sunny (next)</th><th>Rainy (next)</th></tr>
+            <tr><td>Sunny (today)</td><td>0.7</td><td>0.3</td></tr>
+            <tr><td>Rainy (today)</td><td>0.4</td><td>0.6</td></tr>
+          </table>
+          <p>Given today is Sunny, the probability it's Rainy two days from now is found by matrix-multiplying \(P\) by itself and reading the relevant entry — this is the same mechanism used to compute multi-step transitions in any Markov process, including the environment dynamics inside an MDP.</p>
+
+          <h3>Connection to MDPs</h3>
+          <p>A Markov Chain becomes a <strong>Markov Reward Process</strong> once you attach a reward to each state, and becomes a full <strong>Markov Decision Process (MDP)</strong> once you additionally let an agent choose actions that influence the transitions (Q9). So a Markov Chain is best understood as the "environment dynamics skeleton" that RL then adds actions, rewards, and a decision-making agent on top of.</p>
+
+          <div class="callout good">
+            <strong>Key takeaway:</strong> The Markov Property says "the present state is all you need to know" — no memory of history required. A Markov Chain is the pure state-transition model built on that assumption, and it's the direct mathematical ancestor of the MDP framework that all of value-based RL is built on.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="tab-content" id="s2-tab-2">
+      <div class="question-block">
+        <h2 class="q-title">Q9. Explain the components of a Markov Decision Process (MDP) and describe the roles of states, actions, rewards, transition probabilities, and discount factor. <span class="marks-badge">5M</span></h2>
+        <div class="answer-body">
+
+          <h3>What is an MDP?</h3>
+          <p>A <strong>Markov Decision Process (MDP)</strong> is the standard mathematical framework for formalizing sequential decision-making in RL — it extends a Markov Chain (Q8) by adding <strong>actions</strong> (the agent now influences transitions, not just observes them) and <strong>rewards</strong> (there's now something to optimize). Formally, an MDP is defined by the 5-tuple:</p>
+          <div class="formula-block">\[ \text{MDP} = \langle S, A, P, R, \gamma \rangle \]</div>
+
+          <h3>1. States (S)</h3>
+          <p>The set of all possible situations the environment can be in. Crucially, states in an MDP must satisfy the <strong>Markov property</strong> (Q8) — the current state alone must be enough to predict the future, with no need to reference earlier history.</p>
+
+          <h3>2. Actions (A)</h3>
+          <p>The set of choices/moves available to the agent in a given state. Unlike a plain Markov Chain, the agent's choice of action here actively <strong>influences which state comes next</strong> — this is the key addition that turns a passive Markov Chain into a decision process.</p>
+
+          <h3>3. Transition Probabilities (P)</h3>
+          <p>\(P(s' \mid s, a)\) is the probability of ending up in state \(s'\) after taking action \(a\) in state \(s\). This captures the environment's (possibly stochastic) dynamics — e.g. a robot commanding "move forward" might succeed 90% of the time but slip sideways 10% of the time.</p>
+
+          <h3>4. Reward Function (R)</h3>
+          <p>\(R(s, a, s')\) specifies the immediate reward received for a given state-action-nextstate transition. This is the feedback signal that defines what "good" behavior even means in this particular MDP — change the reward function and you change what the optimal policy is.</p>
+
+          <h3>5. Discount Factor (γ)</h3>
+          <p>\(\gamma \in [0, 1]\) controls how much the agent values future rewards relative to immediate ones. \(\gamma = 0\) means the agent is fully myopic (only immediate rewards matter); \(\gamma \to 1\) means future rewards are weighted almost as heavily as immediate ones. Discounting also keeps the total return finite in infinite-horizon settings (Q10), and reflects the general real-world intuition that ₹100 today is worth more than ₹100 in five years.</p>
+
+          <div class="svg-wrap">
+            <svg viewBox="0 0 700 210" xmlns="http://www.w3.org/2000/svg">
+              <text x="350" y="24" fill="var(--accent-hover)" font-size="13" font-weight="700" text-anchor="middle">MDP Components</text>
+              <rect x="30" y="45" width="130" height="55" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5"/>
+              <text x="95" y="77" fill="var(--text)" font-size="11.5" text-anchor="middle">States S</text>
+
+              <rect x="190" y="45" width="130" height="55" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5"/>
+              <text x="255" y="77" fill="var(--text)" font-size="11.5" text-anchor="middle">Actions A</text>
+
+              <rect x="350" y="45" width="130" height="55" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5"/>
+              <text x="415" y="70" fill="var(--text)" font-size="11" text-anchor="middle">Transitions</text>
+              <text x="415" y="85" fill="var(--text)" font-size="11" text-anchor="middle">P(s'|s,a)</text>
+
+              <rect x="510" y="45" width="160" height="55" rx="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5"/>
+              <text x="590" y="70" fill="var(--text)" font-size="11" text-anchor="middle">Reward R(s,a,s')</text>
+              <text x="590" y="85" fill="var(--text)" font-size="11" text-anchor="middle">+ Discount γ</text>
+
+              <text x="350" y="140" fill="var(--text-muted)" font-size="11" text-anchor="middle">Agent picks action → environment transitions per P → reward R issued → γ discounts future</text>
+
+              <rect x="230" y="160" width="240" height="35" rx="6" fill="var(--accent)" stroke="var(--accent)"/>
+              <text x="350" y="182" fill="#fff" font-size="11.5" font-weight="700" text-anchor="middle">Goal: learn π* maximizing E[Σ γᵗ Rₜ]</text>
+            </svg>
+            <p class="svg-caption">Fig 9.1 — The five MDP components combine into one objective: find the policy maximizing expected discounted return</p>
+          </div>
+
+          <h3>The MDP Objective</h3>
+          <p>Given these five components, the agent's job is to find a policy \(\pi\) that maximizes the expected <strong>discounted cumulative reward</strong> (return):</p>
+          <div class="formula-block">\[ G_t = R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \dots = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1} \]</div>
+          <p>This is precisely the quantity that the Bellman equations (Q11/Q12) are built to compute and optimize — \(V^\pi(s)\) and \(Q^\pi(s,a)\) are just formal names for "expected return from here, under this MDP's dynamics."</p>
+
+          <h3>Worked Example</h3>
+          <p>A robot vacuum's MDP: <strong>States</strong> = grid cells in the house; <strong>Actions</strong> = move N/S/E/W; <strong>Transition probabilities</strong> = 85% chance of moving as commanded, 15% chance of slipping to an adjacent cell (imperfect wheels); <strong>Reward</strong> = +1 per unit of floor cleaned, −5 for bumping a wall; <strong>Discount factor</strong> = 0.95, since cleaning the whole house eventually still matters even if it takes a while.</p>
+
+          <div class="callout good">
+            <strong>Key takeaway:</strong> An MDP is a Markov Chain (Q8) with actions and rewards bolted on. All five components — S, A, P, R, γ — are needed to even define what "optimal behavior" means in a given environment, and every value-based RL algorithm is ultimately trying to solve this 5-tuple.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="tab-content" id="s2-tab-3">
+      <div class="question-block">
+        <h2 class="q-title">Q10. Compare Finite vs Infinite Horizon and Episodic vs Continuing Tasks. <span class="marks-badge">5M</span></h2>
+        <div class="answer-body">
+
+          <h3>Two Related but Different Distinctions</h3>
+          <p>These two classifications are often confused because they overlap heavily in practice, but they describe different things: <strong>Horizon</strong> is about <em>how many time steps</em> the agent's decision problem runs for, while <strong>Episodic vs Continuing</strong> is about <em>whether the task has a natural terminal state</em> at all.</p>
+
+          <h3>Finite Horizon</h3>
+          <p>The agent's interaction is planned over a fixed, known number of time steps \(T\). The return is a finite sum:</p>
+          <div class="formula-block">\[ G_t = R_{t+1} + R_{t+2} + \dots + R_T \]</div>
+          <p>Because the horizon is finite and known in advance, the optimal policy can actually depend on <em>how many steps remain</em>, not just the current state — e.g. a chess engine playing its very last few moves before a move-count cutoff may behave differently than with the game open-ended.</p>
+
+          <h3>Infinite Horizon</h3>
+          <p>The agent's interaction is (conceptually) unbounded — there is no fixed stopping time. The return sums infinitely many terms:</p>
+          <div class="formula-block">\[ G_t = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1} \]</div>
+          <p>Without a <strong>discount factor</strong> \(\gamma < 1\) (Q9), this sum could diverge to infinity for tasks with consistently positive rewards, which is precisely why discounting is essential in the infinite-horizon setting — it keeps the return mathematically well-defined (a convergent geometric-style series) even though the process never formally ends.</p>
+
+          <h3>Episodic Tasks</h3>
+          <p>The agent-environment interaction naturally breaks into <strong>episodes</strong>, each with a clear start state and a terminal state. Once the terminal state is reached, the episode ends and a new one begins (often resetting to a start state). <em>Examples: a chess game (ends in checkmate/draw), maze-solving (ends at the goal), a single level of a video game.</em></p>
+          <p><strong>Characteristics:</strong> finite duration per episode, easy to evaluate performance (e.g. "did it win," "how many steps to reach the goal"), common in games and robotics tasks with clear success/failure conditions.</p>
+
+          <h3>Continuing Tasks</h3>
+          <p>The task has <strong>no terminal state</strong> and continues indefinitely — there's no natural "episode boundary" to reset at. <em>Examples: traffic signal control, stock market trading, a data center's ongoing resource management, an industrial process controller running 24/7.</em></p>
+          <p><strong>Characteristics:</strong> no natural endpoint, long-term reward optimization matters heavily, discount factor γ is used extensively (since without it, an infinite continuing task has an ill-defined, potentially infinite return).</p>
+
+          <div class="svg-wrap">
+            <svg viewBox="0 0 700 210" xmlns="http://www.w3.org/2000/svg">
+              <text x="175" y="24" fill="var(--accent-hover)" font-size="12.5" font-weight="700" text-anchor="middle">Episodic Task</text>
+              <line x1="30" y1="80" x2="330" y2="80" stroke="var(--text-dim)" stroke-width="1.5"/>
+              <circle cx="30" cy="80" r="6" fill="var(--success)"/>
+              <circle cx="130" cy="80" r="6" fill="var(--danger)"/>
+              <text x="130" y="60" fill="var(--danger)" font-size="9.5" text-anchor="middle">terminal</text>
+              <circle cx="160" cy="80" r="6" fill="var(--success)"/>
+              <text x="160" y="60" fill="var(--success)" font-size="9.5" text-anchor="middle">reset</text>
+              <circle cx="280" cy="80" r="6" fill="var(--danger)"/>
+              <text x="280" y="60" fill="var(--danger)" font-size="9.5" text-anchor="middle">terminal</text>
+              <text x="175" y="105" fill="var(--text-muted)" font-size="10" text-anchor="middle">Episode 1 → reset → Episode 2 → ...</text>
+
+              <text x="525" y="24" fill="var(--accent-hover)" font-size="12.5" font-weight="700" text-anchor="middle">Continuing Task</text>
+              <line x1="380" y1="80" x2="680" y2="80" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#q10a)"/>
+              <circle cx="380" cy="80" r="6" fill="var(--success)"/>
+              <text x="380" y="60" fill="var(--success)" font-size="9.5" text-anchor="middle">start</text>
+              <text x="525" y="105" fill="var(--text-muted)" font-size="10" text-anchor="middle">No terminal state — goes on indefinitely</text>
+
+              <text x="350" y="160" fill="var(--text-muted)" font-size="10.5" text-anchor="middle">Episodic tasks are usually (but not always) paired with finite horizon;</text>
+              <text x="350" y="178" fill="var(--text-muted)" font-size="10.5" text-anchor="middle">continuing tasks are always paired with infinite horizon + discounting.</text>
+
+              <defs>
+                <marker id="q10a" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="var(--text-dim)"/></marker>
+              </defs>
+            </svg>
+            <p class="svg-caption">Fig 10.1 — Episodic tasks reset after hitting a terminal state; continuing tasks run without a natural endpoint</p>
+          </div>
+
+          <h3>Comparison Table</h3>
+          <table>
+            <tr><th>Aspect</th><th>Finite Horizon</th><th>Infinite Horizon</th></tr>
+            <tr><td>Duration</td><td>Fixed, known T</td><td>Unbounded</td></tr>
+            <tr><td>Return</td><td>Finite sum of rewards</td><td>Requires discounting to stay finite</td></tr>
+            <tr><td>Optimal policy</td><td>Can depend on steps remaining</td><td>Typically stationary (time-independent)</td></tr>
+          </table>
+          <table>
+            <tr><th>Aspect</th><th>Episodic</th><th>Continuing</th></tr>
+            <tr><td>Terminal state</td><td>Yes — episode ends and resets</td><td>No natural terminal state</td></tr>
+            <tr><td>Examples</td><td>Chess, maze-solving, one game level</td><td>Traffic control, trading, process control</td></tr>
+            <tr><td>Typical horizon pairing</td><td>Often finite</td><td>Always infinite (needs γ)</td></tr>
+          </table>
+
+          <div class="callout good">
+            <strong>Key takeaway:</strong> Finite vs infinite horizon is about how long the return sum runs; episodic vs continuing is about whether a terminal/reset state exists at all. Continuing tasks are inherently infinite-horizon and lean heavily on the discount factor γ to keep everything mathematically well-behaved.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end Unit II -->
+
+  <!-- ═══════════════════════════════════════════════
+       UNIT III — Q11 to Q12
+  ═══════════════════════════════════════════════ -->
+  <div class="section-panel" id="s3">
+    <div class="tabs" role="tablist">
+      <button class="tab-btn active" onclick="showTab('s3',0)">Q11 · Bellman Optimality</button>
+      <button class="tab-btn" onclick="showTab('s3',1)">Q12 · Policy Evaluation</button>
+    </div>
+
+    <!-- Q11 -->
+    <div class="tab-content active" id="s3-tab-0">
+      <div class="question-block">
+        <h2 class="q-title">Q11. Describe Bellman Optimality Equations with suitable examples and practical applications in reinforcement learning. <span class="marks-badge">5M</span></h2>
+        <div class="answer-body">
+
+          <h3>Why We Need Them</h3>
+          <p>We already know the state-value function \(V^\pi(s)\) and action-value function \(Q^\pi(s,a)\) measure how good a state or action is <em>under a given policy π</em>. But the real goal of RL is not to evaluate some arbitrary policy — it's to find the <strong>best possible policy</strong>. The Bellman Optimality Equations describe the value functions when the agent follows the <strong>optimal policy π*</strong>, i.e. the policy that maximizes expected cumulative reward from every state.</p>
+
+          <h3>Bellman Expectation vs Bellman Optimality</h3>
+          <p>The regular Bellman equation expresses \(V^\pi(s)\) as the expected value averaged over whatever actions policy π happens to choose. The Bellman <strong>Optimality</strong> Equation replaces that average with a <strong>max</strong> — instead of asking "what does my current policy do here," it asks "what is the best possible action I could take here." This single change (average → max) is what turns an evaluation equation into an improvement/optimization equation.</p>
+
+          <div class="svg-wrap">
+            <svg viewBox="0 0 700 210" xmlns="http://www.w3.org/2000/svg">
+              <rect x="30" y="70" width="160" height="60" rx="8" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5"/>
+              <text x="110" y="95" fill="var(--accent-hover)" font-size="12" text-anchor="middle">State s</text>
+              <text x="110" y="113" fill="var(--text-muted)" font-size="10.5" text-anchor="middle">(current situation)</text>
+
+              <rect x="270" y="20" width="150" height="40" rx="6" fill="var(--surface2)" stroke="var(--border)"/>
+              <text x="345" y="45" fill="var(--text)" font-size="11" text-anchor="middle">Action a1 → Q(s,a1)</text>
+              <rect x="270" y="85" width="150" height="40" rx="6" fill="var(--surface2)" stroke="var(--border)"/>
+              <text x="345" y="110" fill="var(--text)" font-size="11" text-anchor="middle">Action a2 → Q(s,a2)</text>
+              <rect x="270" y="150" width="150" height="40" rx="6" fill="var(--surface2)" stroke="var(--border)"/>
+              <text x="345" y="175" fill="var(--text)" font-size="11" text-anchor="middle">Action a3 → Q(s,a3)</text>
+
+              <line x1="190" y1="100" x2="270" y2="40" stroke="var(--text-dim)" stroke-width="1.3" marker-end="url(#b1)"/>
+              <line x1="190" y1="100" x2="270" y2="105" stroke="var(--text-dim)" stroke-width="1.3" marker-end="url(#b1)"/>
+              <line x1="190" y1="100" x2="270" y2="170" stroke="var(--text-dim)" stroke-width="1.3" marker-end="url(#b1)"/>
+
+              <rect x="530" y="75" width="150" height="50" rx="8" fill="var(--accent)" stroke="var(--accent)"/>
+              <text x="605" y="97" fill="#fff" font-size="11.5" font-weight="700" text-anchor="middle">max over a</text>
+              <text x="605" y="113" fill="#fff" font-size="11" text-anchor="middle">= V*(s)</text>
+
+              <line x1="420" y1="40" x2="530" y2="90" stroke="var(--warning)" stroke-width="1.5" marker-end="url(#b2)"/>
+              <line x1="420" y1="105" x2="530" y2="100" stroke="var(--warning)" stroke-width="1.5" marker-end="url(#b2)"/>
+              <line x1="420" y1="170" x2="530" y2="115" stroke="var(--warning)" stroke-width="1.5" marker-end="url(#b2)"/>
+              <defs>
+                <marker id="b1" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="var(--text-dim)"/></marker>
+                <marker id="b2" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="var(--warning)"/></marker>
+              </defs>
+            </svg>
+            <p class="svg-caption">Fig 11.1 — Bellman Optimality picks the single best branch (max Q-value) instead of averaging over all actions</p>
+          </div>
+
+          <h3>Bellman Optimality Equation for V*(s)</h3>
+          <p>The optimal state-value function is the maximum value achievable from state \(s\) over all possible policies:</p>
+          <div class="formula-block">\[ V^*(s) = \max_{a} \; \mathbb{E}\big[ R_{t+1} + \gamma V^*(S_{t+1}) \mid S_t = s, A_t = a \big] \]</div>
+          <p>In plain words: the optimal value of a state equals the immediate reward plus the discounted optimal value of the next state, <strong>maximized over every action</strong> the agent could take.</p>
+
+          <h3>Bellman Optimality Equation for Q*(s,a)</h3>
+          <p>Similarly, the optimal action-value function says: take action \(a\) now, then behave optimally forever after — meaning the next action is also chosen via a max:</p>
+          <div class="formula-block">\[ Q^*(s,a) = \mathbb{E}\big[ R_{t+1} + \gamma \max_{a'} Q^*(S_{t+1}, a') \mid S_t = s, A_t = a \big] \]</div>
+          <p>Notice the recursive structure — \(Q^*\) at the current state-action pair depends on the best possible \(Q^*\) at the next state. This is what makes it a "Bellman" equation: it expresses value in terms of itself, one step later.</p>
+
+          <h3>Relationship Between V* and Q*</h3>
+          <div class="formula-block">\[ V^*(s) = \max_{a} Q^*(s,a) \]</div>
+          <p>Once you have \(Q^*\), the optimal policy is trivial to extract — just always pick the action with the highest \(Q^*\):</p>
+          <div class="formula-block">\[ \pi^*(s) = \arg\max_{a} Q^*(s,a) \]</div>
+          <p>This is actually the single most important practical consequence of these equations: if an agent can learn \(Q^*(s,a)\) accurately, it does not need to separately learn a policy — the optimal policy falls out for free by just being greedy with respect to \(Q^*\).</p>
+
+          <h3>Worked Example</h3>
+          <p>Say a robot is at a crossroads with 3 actions — Left, Right, Straight — and one-step lookahead gives:</p>
+          <table>
+            <tr><th>Action</th><th>Immediate Reward</th><th>γ·V*(next state)</th><th>Total = Q*(s,a)</th></tr>
+            <tr><td>Left</td><td>2</td><td>0.9 × 20 = 18</td><td>20</td></tr>
+            <tr><td>Right</td><td>5</td><td>0.9 × 30 = 27</td><td>32</td></tr>
+            <tr><td>Straight</td><td>0</td><td>0.9 × 50 = 45</td><td>45</td></tr>
+          </table>
+          <p>Here \(V^*(s) = \max(20, 32, 45) = 45\), and \(\pi^*(s) = \text{Straight}\) — even though Straight has the worst immediate reward, it wins because the Bellman Optimality equation looks past the immediate reward toward the best long-term outcome, exactly like the "Path B leads to a goal worth +100" example from the exploration slides.</p>
+
+          <h3>Why It's Hard to Solve Directly — and How We Solve It</h3>
+          <p>The Bellman Optimality equations are non-linear (because of the max operator), so unlike the Bellman Expectation equation, they can't be solved with a simple system of linear equations. In practice they're solved iteratively:</p>
+          <ul>
+            <li><strong>Value Iteration:</strong> repeatedly apply the Bellman Optimality update to every state until values converge.</li>
+            <li><strong>Policy Iteration:</strong> alternate between evaluating a policy (Bellman Expectation) and improving it greedily (Bellman Optimality), converging to π*.</li>
+            <li><strong>Q-Learning (model-free):</strong> learns \(Q^*\) directly from sampled transitions without knowing the environment's transition probabilities, using the same max-based update as its core rule.</li>
+          </ul>
+
+          <h3>Practical Applications</h3>
+          <p>Bellman Optimality is the theoretical backbone of nearly every value-based RL algorithm — Q-Learning, SARSA (via a related but non-optimal variant), Deep Q-Networks (DQN) for Atari/game-playing agents, robot path-planning where the optimal route must be found under a reward/cost structure, and inventory/resource management systems where an optimal action policy is learned over time.</p>
+
+          <div class="callout good">
+            <strong>Key takeaway:</strong> Bellman Expectation evaluates a policy; Bellman Optimality finds the best one, by swapping the average-over-actions for a max-over-actions. Everything downstream — Q-Learning, DQN, optimal policy extraction — is built on this one idea.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q12 -->
+    <div class="tab-content" id="s3-tab-1">
+      <div class="question-block">
+        <h2 class="q-title">Q12. Describe Policy Evaluation with suitable examples and practical applications in reinforcement learning. <span class="marks-badge">5M</span></h2>
+        <div class="answer-body">
+
+          <h3>What is Policy Evaluation?</h3>
+          <p><strong>Policy Evaluation</strong> is the process of computing the state-value function \(V^\pi(s)\) for a <em>given, fixed</em> policy π — i.e. answering the question "if the agent always follows this specific policy, how good is each state?" It does not try to improve the policy; it just measures it. This makes it the "measurement" step that later feeds into policy improvement (together the two form <strong>Policy Iteration</strong>).</p>
+
+          <h3>The Bellman Expectation Equation</h3>
+          <p>Policy Evaluation is built directly on the Bellman Expectation Equation, which expresses the value of a state under policy π as the expected immediate reward plus the discounted value of the next state, averaged over the actions π actually takes and the transitions the environment produces:</p>
+          <div class="formula-block">\[ V^\pi(s) = \sum_{a} \pi(a \mid s) \sum_{s'} P(s' \mid s, a) \Big[ R(s,a,s') + \gamma V^\pi(s') \Big] \]</div>
+          <p>Unlike the Bellman Optimality equation (Q11), there's <strong>no max</strong> here — we're not choosing the best action, we're honestly averaging over whatever the policy π tells us to do. This makes the equation linear in \(V^\pi\), which is why, in principle, it can be solved directly by solving a system of linear equations. In practice, for anything beyond tiny state spaces, it's solved iteratively.</p>
+
+          <h3>Iterative Policy Evaluation Algorithm</h3>
+          <p>Start with an arbitrary initial guess (usually \(V_0(s) = 0\) for all states), and repeatedly apply the Bellman Expectation update to every state as an assignment:</p>
+          <div class="formula-block">\[ V_{k+1}(s) \leftarrow \sum_{a} \pi(a \mid s) \sum_{s'} P(s' \mid s,a)\Big[ R(s,a,s') + \gamma V_k(s') \Big] \]</div>
+          <p>Each full pass over all states is called a <strong>sweep</strong>. As \(k \to \infty\), \(V_k \to V^\pi\) — this convergence is guaranteed for \(\gamma < 1\) by the Bellman equation being a contraction mapping. In practice, iteration stops once the change between sweeps drops below a small threshold θ.</p>
+
+          <div class="svg-wrap">
+            <svg viewBox="0 0 700 200" xmlns="http://www.w3.org/2000/svg">
+              <rect x="20" y="80" width="140" height="45" rx="8" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5"/>
+              <text x="90" y="107" fill="var(--accent-hover)" font-size="12" text-anchor="middle">V₀(s) = 0</text>
+
+              <rect x="220" y="80" width="140" height="45" rx="8" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5"/>
+              <text x="290" y="107" fill="var(--accent-hover)" font-size="12" text-anchor="middle">V₁(s)</text>
+
+              <rect x="420" y="80" width="140" height="45" rx="8" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.5"/>
+              <text x="490" y="107" fill="var(--accent-hover)" font-size="12" text-anchor="middle">V₂(s) ...</text>
+
+              <rect x="590" y="80" width="90" height="45" rx="8" fill="var(--accent)" stroke="var(--accent)"/>
+              <text x="635" y="107" fill="#fff" font-size="11.5" font-weight="700" text-anchor="middle">Vπ(s)</text>
+
+              <line x1="160" y1="102" x2="220" y2="102" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#c1)"/>
+              <line x1="360" y1="102" x2="420" y2="102" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#c1)"/>
+              <line x1="560" y1="102" x2="590" y2="102" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#c1)"/>
+
+              <text x="290" y="60" fill="var(--text-muted)" font-size="10.5" text-anchor="middle">Bellman sweep</text>
+              <text x="490" y="60" fill="var(--text-muted)" font-size="10.5" text-anchor="middle">Bellman sweep</text>
+              <text x="635" y="60" fill="var(--success)" font-size="10.5" text-anchor="middle">Converged</text>
+              <text x="350" y="170" fill="var(--text-muted)" font-size="11" text-anchor="middle">Repeat until |Vₖ₊₁(s) − Vₖ(s)| &lt; θ for all states</text>
+
+              <defs>
+                <marker id="c1" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="var(--text-dim)"/></marker>
+              </defs>
+            </svg>
+            <p class="svg-caption">Fig 12.1 — Iterative Policy Evaluation: repeated Bellman sweeps drive Vₖ toward the true Vπ</p>
+          </div>
+
+          <h3>Worked Example</h3>
+          <p>Consider a tiny grid with a "Traffic Light" policy: π always says "Stop" at Red, "Go" at Green. Suppose from state <em>Red</em>, taking "Stop" gives reward 0 and deterministically transitions to <em>Green</em>; from <em>Green</em>, "Go" gives reward +5 and transitions back to <em>Red</em>. With γ = 0.9:</p>
+          <div class="formula-block">\[ V^\pi(\text{Red}) = 0 + 0.9\,V^\pi(\text{Green}), \qquad V^\pi(\text{Green}) = 5 + 0.9\,V^\pi(\text{Red}) \]</div>
+          <p>Solving these two simultaneous equations: substitute the first into the second → \(V^\pi(\text{Green}) = 5 + 0.9(0.9\,V^\pi(\text{Green}))\) → \(V^\pi(\text{Green})(1 - 0.81) = 5\) → \(V^\pi(\text{Green}) \approx 26.3\), and then \(V^\pi(\text{Red}) \approx 23.7\). This is exactly what iterative sweeps converge to numerically, just solved in closed form here since the example is small.</p>
+
+          <h3>Policy Evaluation vs Policy Improvement (Context)</h3>
+          <p>Policy Evaluation on its own doesn't produce a better policy — it just tells you how good the current one is. It becomes powerful when paired with <strong>Policy Improvement</strong> (acting greedily with respect to the just-computed \(V^\pi\) to get a new, better policy π′), and alternating the two repeatedly is exactly <strong>Policy Iteration</strong>, which is guaranteed to converge to the optimal policy π* — connecting straight back to the Bellman Optimality equations from Q11.</p>
+
+          <h3>Practical Applications</h3>
+          <p>Policy Evaluation is used any time an agent needs to judge a fixed strategy before touching it — evaluating a rule-based trading strategy's expected return before deploying capital, evaluating a fixed clinical treatment protocol's expected patient outcome in healthcare RL, evaluating a robot's current fixed navigation policy before running policy improvement, and as the core inner loop of dynamic-programming based RL solvers (Policy Iteration, and implicitly inside Value Iteration).</p>
+
+          <div class="callout good">
+            <strong>Key takeaway:</strong> Policy Evaluation = "how good is this policy," solved via repeated Bellman Expectation sweeps until values stabilize. It's the measurement half of Policy Iteration; Policy Improvement (greedy w.r.t. the evaluated values) is the improvement half.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end Unit III -->
+
+</div><!-- end page-wrapper -->
+
+<script>
+  function showSection(id) {
+    document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.section-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  function showTab(section, i) {
+    const panel = document.getElementById(section);
+    panel.querySelectorAll('.tab-content').forEach((el, idx) => {
+      el.classList.toggle('active', idx === i);
+    });
+    panel.querySelectorAll('.tab-btn').forEach((btn, idx) => {
+      btn.classList.toggle('active', idx === i);
+    });
+  }
+</script>
+</body>
+</html>
