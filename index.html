@@ -11,57 +11,45 @@
   <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <style>
     pre {
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 16px;
-      overflow-x: auto;
-      font-family: 'Courier New', Courier, monospace;
-      font-size: 0.82rem;
-      line-height: 1.65;
-      margin: 14px 0;
-      color: var(--text);
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 16px; overflow-x: auto;
+      font-family: 'Courier New', Courier, monospace; font-size: 0.82rem;
+      line-height: 1.65; margin: 14px 0; color: var(--text);
     }
     code {
-      font-family: 'Courier New', Courier, monospace;
-      font-size: 0.82rem;
-      background: var(--surface2);
-      padding: 2px 5px;
-      border-radius: 3px;
+      font-family: 'Courier New', Courier, monospace; font-size: 0.82rem;
+      background: var(--surface2); padding: 2px 5px; border-radius: 3px;
       color: var(--accent-hover);
     }
     pre code { background: none; padding: 0; color: var(--text); font-size: 0.82rem; }
     .cmt { color: var(--text-muted); }
     .formula {
-      background: var(--surface2);
-      border-radius: var(--radius);
-      padding: 10px 16px;
-      margin: 14px 0;
-      overflow-x: auto;
-      text-align: center;
+      background: var(--surface2); border-radius: var(--radius);
+      padding: 10px 16px; margin: 14px 0; overflow-x: auto; text-align: center;
+    }
+    .eq-explain {
+      background: var(--surface); border-left: 3px solid var(--accent);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 10px 14px; margin: -6px 0 14px 0;
+      font-size: 0.88rem; color: var(--text-muted); line-height: 1.7;
     }
     .diagram {
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 12px;
-      margin: 14px 0;
-      overflow-x: auto;
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 12px; margin: 14px 0; overflow-x: auto;
     }
     .diagram svg { width: 100%; height: auto; display: block; min-width: 480px; }
     .diagram .caption { text-align: center; color: var(--text-muted); font-size: 0.78rem; margin-top: 6px; }
-    .box  { fill: var(--surface); stroke: var(--accent); stroke-width: 1.5; }
-    .box2 { fill: var(--surface); stroke: var(--success); stroke-width: 1.5; }
-    .box3 { fill: var(--surface); stroke: var(--warning); stroke-width: 1.5; }
-    .box4 { fill: var(--surface); stroke: var(--danger); stroke-width: 1.5; }
-    .lbl  { fill: var(--text); font-size: 12px; font-family: system-ui, sans-serif; text-anchor: middle; }
-    .lbl-s{ fill: var(--text-muted); font-size: 10px; font-family: system-ui, sans-serif; text-anchor: middle; }
+    .box  { fill: var(--surface); stroke: var(--accent);   stroke-width: 1.5; }
+    .box2 { fill: var(--surface); stroke: var(--success);  stroke-width: 1.5; }
+    .box3 { fill: var(--surface); stroke: var(--warning);  stroke-width: 1.5; }
+    .box4 { fill: var(--surface); stroke: var(--danger);   stroke-width: 1.5; }
+    .lbl  { fill: var(--text);      font-size: 12px; font-family: system-ui, sans-serif; text-anchor: middle; }
+    .lbl-s{ fill: var(--text-muted);font-size: 10px; font-family: system-ui, sans-serif; text-anchor: middle; }
     .arr  { stroke: var(--text-muted); stroke-width: 1.5; fill: none; marker-end: url(#ah); }
     .dash { stroke: var(--text-dim); stroke-width: 1.2; fill: none; stroke-dasharray: 4 3; }
   </style>
 </head>
 <body>
-<!-- shared arrowhead marker -->
 <svg width="0" height="0" style="position:absolute">
   <defs>
     <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -71,7 +59,6 @@
 </svg>
 
 <div class="page-wrapper">
-
   <header class="site-header">
     <h1>Reinforcement Learning — Mid 2</h1>
     <p>Exam Prep · 12 Important Questions · Units 3, 4 &amp; 5</p>
@@ -83,11 +70,11 @@
     <button class="section-btn" onclick="showSection('s5', this)">Section III — Unit 5</button>
   </div>
 
-  <!-- ═══════════════ SECTION I — Unit 3: Q1, Q2 ═══════════════ -->
+  <!-- ═══════ UNIT 3 ═══════ -->
   <div class="section-panel active" id="s3">
     <div class="tabs" role="tablist">
       <button class="tab-btn active" onclick="showTab('s3',0)">Q1 · Value Iteration</button>
-      <button class="tab-btn" onclick="showTab('s3',1)">Q2 · TD(0)</button>
+      <button class="tab-btn"        onclick="showTab('s3',1)">Q2 · TD(0)</button>
     </div>
 
     <!-- Q1 -->
@@ -95,233 +82,188 @@
       <div class="question-block">
         <h2 class="q-title">Q1. Explain Value Iteration with suitable examples and applications.</h2>
         <div class="answer-body">
-          <p><strong>Core idea:</strong> In a fully known environment (we know transitions and rewards), we want to find the best possible value for every state. Value Iteration repeatedly applies the Bellman optimality equation until values stop changing.</p>
 
-          <h3>Bellman Optimality Equation</h3>
-          <p>The optimal value \(V^*(s)\) of a state is the best reward you can get from it, considering all future steps:</p>
+          <p>Value Iteration is a planning algorithm used when we have a <strong>complete model of the environment</strong> — meaning we know exactly what happens after every action. Given that model, the goal is to figure out the best possible long-term value for every state, and from there, derive the best policy.</p>
+
+          <h3>The Bellman Optimality Equation</h3>
+          <p>The optimal value \(V^*(s)\) of any state satisfies this recursive relationship:</p>
           <div class="formula">
             \[ V^*(s) = \max_a \left[ R(s,a) + \gamma \sum_{s'} P(s' \mid s, a)\, V^*(s') \right] \]
           </div>
-          <p>Read it as: <em>best action</em> × (<em>immediate reward</em> + <em>discounted future value</em>).</p>
+          <div class="eq-explain">
+            Reading this in plain English: the true value of a state is the reward you get from the best action, plus the discounted value of wherever that action takes you — weighted by how likely each landing state is. The \(\max_a\) means we always pick the action that gives us the most. \(\gamma\) (gamma, between 0 and 1) is the discount factor — it controls how much we care about future rewards. If \(\gamma\) is close to 1, we're very patient and plan far ahead. If it's close to 0, we're greedy and only care about the immediate reward.
+          </div>
 
-          <h3>Algorithm</h3>
-          <ol>
-            <li>Initialize \(V(s) = 0\) for all states.</li>
-            <li>For every state, apply the Bellman equation to update \(V(s)\).</li>
-            <li>Repeat until the maximum change \(\Delta \lt \theta\) (some tiny threshold).</li>
-            <li>Extract policy: \(\pi^*(s) = \arg\max_a \left[ R(s,a) + \gamma \sum_{s'} P(s'|s,a)\,V(s') \right]\).</li>
-          </ol>
+          <h3>How the Algorithm Works</h3>
+          <p>The idea is simple: we don't know \(V^*\) ahead of time, so we start with a guess (usually all zeros) and keep applying the Bellman equation until our estimates stop changing. Here's the full process:</p>
+          <p><strong>Step 1 — Initialize:</strong> Set \(V(s) = 0\) for every state \(s\). This is our starting guess.</p>
+          <p><strong>Step 2 — Sweep:</strong> For every state, compute a new value using the current estimates of all neighbouring states:</p>
+          <div class="formula">
+            \[ V_{\text{new}}(s) \leftarrow \max_a \left[ R(s,a) + \gamma \sum_{s'} P(s' \mid s,a)\, V(s') \right] \]
+          </div>
+          <p><strong>Step 3 — Check convergence:</strong> Compute \(\Delta = \max_s |V_{\text{new}}(s) - V(s)|\). If \(\Delta \lt \theta\) (some tiny threshold like 0.001), stop. Otherwise, set \(V \leftarrow V_{\text{new}}\) and repeat.</p>
+          <p><strong>Step 4 — Extract policy:</strong> Once values have converged, the optimal action at any state is simply whichever action gives the highest Bellman value:</p>
+          <div class="formula">
+            \[ \pi^*(s) = \arg\max_a \left[ R(s,a) + \gamma \sum_{s'} P(s'|s,a)\,V^*(s') \right] \]
+          </div>
+          <div class="eq-explain">
+            This says: look at every possible action from state \(s\), compute the value of taking it (immediate reward + discounted future), and pick the action with the highest total. The policy is derived from the values — we don't learn it directly.
+          </div>
 
           <h3>Grid World Example</h3>
-          <p>4×4 grid. Goal = top-right (+1), pit = bottom-left (−1), all moves cost −0.01. We start with all zeros and sweep until the values converge:</p>
+          <p>Consider a 4×4 grid. The top-right cell is the goal (+1 reward), the bottom-left cell is a pit (−1 reward), and every other move costs −0.01. With \(\gamma = 0.9\), we start with all zeros. After several sweeps, values propagate outward from the goal:</p>
 
           <div class="diagram">
             <svg viewBox="0 0 520 200">
-              <!-- Grid labels -->
-              <text x="90" y="20" class="lbl-s" style="fill:var(--text-muted)">Iteration 0</text>
-              <text x="310" y="20" class="lbl-s" style="fill:var(--text-muted)">Converged</text>
-
-              <!-- Left grid (init) -->
+              <text x="90" y="20" class="lbl-s" style="fill:var(--text-muted)">Iteration 0 (all zero)</text>
+              <text x="310" y="20" class="lbl-s" style="fill:var(--text-muted)">Converged V*</text>
               <g transform="translate(20,30)">
-                <!-- 4x4 grid -->
                 <rect x="0"   y="0"   width="55" height="40" class="box"/>
                 <rect x="55"  y="0"   width="55" height="40" class="box"/>
                 <rect x="110" y="0"   width="55" height="40" class="box"/>
                 <rect x="165" y="0"   width="55" height="40" class="box" style="stroke:var(--success)"/>
-
                 <rect x="0"   y="40"  width="55" height="40" class="box"/>
                 <rect x="55"  y="40"  width="55" height="40" class="box"/>
                 <rect x="110" y="40"  width="55" height="40" class="box"/>
                 <rect x="165" y="40"  width="55" height="40" class="box"/>
-
                 <rect x="0"   y="80"  width="55" height="40" class="box"/>
                 <rect x="55"  y="80"  width="55" height="40" class="box"/>
                 <rect x="110" y="80"  width="55" height="40" class="box"/>
                 <rect x="165" y="80"  width="55" height="40" class="box"/>
-
                 <rect x="0"   y="120" width="55" height="40" class="box" style="stroke:var(--danger)"/>
                 <rect x="55"  y="120" width="55" height="40" class="box"/>
                 <rect x="110" y="120" width="55" height="40" class="box"/>
                 <rect x="165" y="120" width="55" height="40" class="box"/>
-
-                <!-- Values -->
-                <text x="27" y="24" class="lbl">0</text>
-                <text x="82" y="24" class="lbl">0</text>
-                <text x="137" y="24" class="lbl">0</text>
-                <text x="192" y="24" class="lbl" style="fill:var(--success)">+1</text>
-
-                <text x="27" y="64" class="lbl">0</text>
-                <text x="82" y="64" class="lbl">0</text>
-                <text x="137" y="64" class="lbl">0</text>
-                <text x="192" y="64" class="lbl">0</text>
-
-                <text x="27" y="104" class="lbl">0</text>
-                <text x="82" y="104" class="lbl">0</text>
-                <text x="137" y="104" class="lbl">0</text>
-                <text x="192" y="104" class="lbl">0</text>
-
+                <text x="27" y="24" class="lbl">0</text><text x="82" y="24" class="lbl">0</text>
+                <text x="137" y="24" class="lbl">0</text><text x="192" y="24" class="lbl" style="fill:var(--success)">+1</text>
+                <text x="27" y="64" class="lbl">0</text><text x="82" y="64" class="lbl">0</text>
+                <text x="137" y="64" class="lbl">0</text><text x="192" y="64" class="lbl">0</text>
+                <text x="27" y="104" class="lbl">0</text><text x="82" y="104" class="lbl">0</text>
+                <text x="137" y="104" class="lbl">0</text><text x="192" y="104" class="lbl">0</text>
                 <text x="27" y="144" class="lbl" style="fill:var(--danger)">−1</text>
-                <text x="82" y="144" class="lbl">0</text>
-                <text x="137" y="144" class="lbl">0</text>
-                <text x="192" y="144" class="lbl">0</text>
+                <text x="82" y="144" class="lbl">0</text><text x="137" y="144" class="lbl">0</text><text x="192" y="144" class="lbl">0</text>
               </g>
-
-              <!-- Arrow between grids -->
               <line x1="240" y1="100" x2="265" y2="100" class="arr"/>
-              <text x="252" y="92" class="lbl-s">sweep</text>
-
-              <!-- Right grid (converged) -->
+              <text x="252" y="92" class="lbl-s">sweeps</text>
               <g transform="translate(270,30)">
                 <rect x="0"   y="0"   width="55" height="40" class="box"/>
                 <rect x="55"  y="0"   width="55" height="40" class="box"/>
                 <rect x="110" y="0"   width="55" height="40" class="box"/>
                 <rect x="165" y="0"   width="55" height="40" class="box" style="stroke:var(--success)"/>
-
                 <rect x="0"   y="40"  width="55" height="40" class="box"/>
                 <rect x="55"  y="40"  width="55" height="40" class="box"/>
                 <rect x="110" y="40"  width="55" height="40" class="box"/>
                 <rect x="165" y="40"  width="55" height="40" class="box"/>
-
                 <rect x="0"   y="80"  width="55" height="40" class="box"/>
                 <rect x="55"  y="80"  width="55" height="40" class="box"/>
                 <rect x="110" y="80"  width="55" height="40" class="box"/>
                 <rect x="165" y="80"  width="55" height="40" class="box"/>
-
                 <rect x="0"   y="120" width="55" height="40" class="box" style="stroke:var(--danger)"/>
                 <rect x="55"  y="120" width="55" height="40" class="box"/>
                 <rect x="110" y="120" width="55" height="40" class="box"/>
                 <rect x="165" y="120" width="55" height="40" class="box"/>
-
-                <!-- Converged values -->
-                <text x="27"  y="24"  class="lbl">0.60</text>
-                <text x="82"  y="24"  class="lbl">0.76</text>
-                <text x="137" y="24"  class="lbl">0.89</text>
-                <text x="192" y="24"  class="lbl" style="fill:var(--success)">+1</text>
-
-                <text x="27"  y="64"  class="lbl">0.47</text>
-                <text x="82"  y="64"  class="lbl">0.61</text>
-                <text x="137" y="64"  class="lbl">0.76</text>
-                <text x="192" y="64"  class="lbl">0.60</text>
-
-                <text x="27"  y="104" class="lbl">0.32</text>
-                <text x="82"  y="104" class="lbl">0.44</text>
-                <text x="137" y="104" class="lbl">0.57</text>
-                <text x="192" y="104" class="lbl">0.35</text>
-
+                <text x="27"  y="24"  class="lbl">0.60</text><text x="82"  y="24"  class="lbl">0.76</text>
+                <text x="137" y="24"  class="lbl">0.89</text><text x="192" y="24"  class="lbl" style="fill:var(--success)">+1</text>
+                <text x="27"  y="64"  class="lbl">0.47</text><text x="82"  y="64"  class="lbl">0.61</text>
+                <text x="137" y="64"  class="lbl">0.76</text><text x="192" y="64"  class="lbl">0.60</text>
+                <text x="27"  y="104" class="lbl">0.32</text><text x="82"  y="104" class="lbl">0.44</text>
+                <text x="137" y="104" class="lbl">0.57</text><text x="192" y="104" class="lbl">0.35</text>
                 <text x="27"  y="144" class="lbl" style="fill:var(--danger)">−1</text>
-                <text x="82"  y="144" class="lbl">0.18</text>
-                <text x="137" y="144" class="lbl">0.32</text>
+                <text x="82"  y="144" class="lbl">0.18</text><text x="137" y="144" class="lbl">0.32</text>
                 <text x="192" y="144" class="lbl">0.18</text>
               </g>
             </svg>
-            <div class="caption">Grid world: values start at 0, converge toward the +1 goal (green) and away from the −1 pit (red). γ = 0.9.</div>
+            <div class="caption">Values start at zero and propagate outward from the +1 goal. States near the goal get higher values; states near the pit get penalized. γ = 0.9.</div>
           </div>
 
-          <h3>Key Points to Remember</h3>
-          <ul>
-            <li><strong>Requires a model</strong> — you must know \(P(s'|s,a)\) and \(R(s,a)\). This is <em>dynamic programming</em>, not trial-and-error RL.</li>
-            <li><strong>Convergence guaranteed</strong> — the Bellman operator is a contraction; repeated application always converges.</li>
-            <li><strong>\(\gamma\)</strong> (discount factor, 0–1) controls how much future reward matters. \(\gamma = 0\) = greedy, \(\gamma \to 1\) = long-sighted.</li>
-            <li><strong>Policy extraction</strong> — once \(V^*\) is found, pick the greedy action at each state.</li>
-          </ul>
+          <p>Notice that the bottom-left cell stays at −1 (it's a terminal pit), and the top-right stays at +1 (terminal goal). Every other cell's value reflects how reachable the goal is from there, discounted by how many steps it takes.</p>
+
+          <h3>Convergence</h3>
+          <p>Value Iteration is guaranteed to converge because the Bellman operator is a <strong>contraction mapping</strong>. This is a mathematical property that means every time you apply the update, the values move strictly closer to the true \(V^*\). The convergence rate depends on \(\gamma\) — smaller gamma means faster convergence because future rewards shrink quickly.</p>
+
+          <h3>Important Properties</h3>
+          <p>Value Iteration is a <strong>model-based</strong> method — it requires knowing the transition probabilities \(P(s'|s,a)\) and rewards \(R(s,a)\) upfront. This makes it impractical for real environments where we don't have a perfect model. It's also computationally expensive for large state spaces since it sweeps over every state at every iteration. For continuous state spaces, it's not directly applicable. These limitations are exactly what motivate the model-free methods like TD learning in Q2.</p>
 
           <h3>Applications</h3>
-          <ul>
-            <li>Robot path planning (known map)</li>
-            <li>Game solving (chess endgames with full state info)</li>
-            <li>Inventory management, scheduling</li>
-          </ul>
+          <p>Value Iteration is used in robot navigation when a map is known (the robot knows where walls are and what moves are possible), in inventory management and scheduling problems where the system dynamics are known, and in game-playing when the full game tree is tractable (like chess endgame tablebases). It's also the theoretical foundation that most other RL algorithms build on.</p>
+
         </div>
       </div>
-    </div><!-- /s3-tab-0 -->
+    </div>
 
     <!-- Q2 -->
     <div class="tab-content" id="s3-tab-1">
       <div class="question-block">
         <h2 class="q-title">Q2. Explain TD(0) — Temporal Difference Learning with 0-step lookahead.</h2>
         <div class="answer-body">
-          <p><strong>Core idea:</strong> TD(0) learns directly from experience — no model needed. It updates value estimates after <em>every single step</em> by comparing what it <em>expected</em> vs. what it <em>actually got</em>.</p>
 
-          <h3>The Update Rule</h3>
+          <p>TD(0) is a <strong>model-free</strong> method that learns value functions directly from experience, without needing to know transition probabilities or rewards in advance. The core insight is that you don't have to wait until the end of an episode to learn — you can update your estimate after every single step, using the next state's estimated value as a stand-in for the true future return.</p>
+
+          <h3>The TD(0) Update Rule</h3>
           <div class="formula">
-            \[ V(s_t) \leftarrow V(s_t) + \alpha \,\underbrace{\bigl[r_{t+1} + \gamma\, V(s_{t+1}) - V(s_t)\bigr]}_{\text{TD error } \delta_t} \]
+            \[ V(s_t) \leftarrow V(s_t) + \alpha \underbrace{\bigl[ r_{t+1} + \gamma\, V(s_{t+1}) - V(s_t) \bigr]}_{\text{TD error } \delta_t} \]
           </div>
-          <ul>
-            <li>\(\alpha\) = learning rate (how much we trust the new info)</li>
-            <li>\(r_{t+1} + \gamma V(s_{t+1})\) = <strong>TD target</strong> — what we now think the value is</li>
-            <li>\(\delta_t\) = <strong>TD error</strong> — the surprise; how wrong our old estimate was</li>
-          </ul>
+          <div class="eq-explain">
+            Breaking this down: \(V(s_t)\) is our current estimate of how good state \(s_t\) is. After taking a step, we receive reward \(r_{t+1}\) and land in \(s_{t+1}\). Our new estimate of \(s_t\)'s value is \(r_{t+1} + \gamma V(s_{t+1})\) — the actual reward we got, plus the discounted value of where we ended up. The difference between this new estimate and our old one is the <strong>TD error</strong> \(\delta_t\), which measures how surprised we were. We move our estimate a small step \(\alpha\) in the direction of that surprise.
+          </div>
 
-          <h3>Backup Diagram</h3>
+          <h3>The Backup Diagram</h3>
           <div class="diagram">
             <svg viewBox="0 0 520 160">
-              <!-- State s_t -->
               <circle cx="120" cy="50" r="28" class="box"/>
               <text x="120" y="46" class="lbl">\(s_t\)</text>
-              <text x="120" y="62" class="lbl-s">V(s_t)</text>
-
-              <!-- arrow down -->
+              <text x="120" y="62" class="lbl-s">V(s_t) — old estimate</text>
               <line x1="120" y1="78" x2="120" y2="108" class="arr"/>
-              <text x="136" y="97" class="lbl-s">\(r_{t+1}\)</text>
-
-              <!-- State s_{t+1} -->
+              <text x="138" y="97" class="lbl-s">\(r_{t+1}\)</text>
               <circle cx="120" cy="132" r="28" class="box2"/>
               <text x="120" y="128" class="lbl">\(s_{t+1}\)</text>
-              <text x="120" y="144" class="lbl-s">V(s_{t+1})</text>
-
-              <!-- TD target label -->
-              <rect x="200" y="90" width="130" height="36" rx="6" class="box3"/>
-              <text x="265" y="107" class="lbl" style="fill:var(--warning)">TD target</text>
-              <text x="265" y="121" class="lbl-s">\(r_{t+1} + \gamma V(s_{t+1})\)</text>
-              <line x1="148" y1="110" x2="198" y2="108" class="arr"/>
-
-              <!-- Update arrow -->
-              <path d="M 265 90 Q 265 55 160 50" class="arr" style="stroke:var(--accent)"/>
-              <text x="290" y="68" class="lbl" style="fill:var(--accent)">update</text>
-              <text x="290" y="82" class="lbl-s">V(s_t) ← V(s_t) + αδ</text>
-
-              <!-- DP vs TD label -->
-              <text x="400" y="30" class="lbl-s" style="fill:var(--text-muted)">TD(0): 1-step</text>
-              <text x="400" y="44" class="lbl-s" style="fill:var(--text-muted)">bootstrap on V(s')</text>
+              <text x="120" y="144" class="lbl-s">V(s_{t+1}) — bootstrap</text>
+              <rect x="210" y="85" width="145" height="38" rx="6" class="box3"/>
+              <text x="282" y="103" class="lbl" style="fill:var(--warning)">TD target</text>
+              <text x="282" y="117" class="lbl-s">\(r_{t+1} + \gamma V(s_{t+1})\)</text>
+              <line x1="150" y1="115" x2="208" y2="106" class="arr"/>
+              <path d="M 282 85 Q 282 50 150 50" class="arr" style="stroke:var(--accent)"/>
+              <text x="310" y="60" class="lbl" style="fill:var(--accent)">update V(s_t)</text>
+              <text x="310" y="74" class="lbl-s">by α × δ_t</text>
             </svg>
-            <div class="caption">TD(0) looks one step ahead and bootstraps off its own estimate of V(s').</div>
+            <div class="caption">TD(0) takes one step, observes the reward, then uses V(s_{t+1}) as a proxy for the rest of the future.</div>
           </div>
 
-          <h3>TD vs Monte Carlo vs DP</h3>
-          <ul>
-            <li><strong>DP:</strong> knows the model, updates using true \(P(s'|s,a)\). No experience needed.</li>
-            <li><strong>Monte Carlo:</strong> waits until episode ends, then updates using the full real return \(G_t\). High variance, unbiased.</li>
-            <li><strong>TD(0):</strong> updates after each step, bootstraps off \(V(s')\). Low variance, slightly biased — but works online.</li>
-          </ul>
+          <p>The key phrase here is <strong>bootstrapping</strong> — we're using our own estimate of the next state's value to update our estimate of the current state. We're not waiting for the true return; we're using one estimate to improve another.</p>
 
-          <h3>Simple Walkthrough</h3>
-          <p>Say \(V(s) = 5\), we take a step, get \(r = 2\), land in \(s'\) with \(V(s') = 4\), \(\gamma = 0.9\), \(\alpha = 0.1\):</p>
+          <h3>A Worked Example</h3>
+          <p>Say you're in state \(s\) with current estimate \(V(s) = 5\). You take an action, receive reward \(r = 2\), and land in state \(s'\) with \(V(s') = 4\). With \(\gamma = 0.9\) and \(\alpha = 0.1\):</p>
           <div class="formula">
             \[\delta = 2 + 0.9 \times 4 - 5 = 2 + 3.6 - 5 = 0.6\]
             \[V(s) \leftarrow 5 + 0.1 \times 0.6 = 5.06\]
           </div>
+          <p>The TD error was +0.6 (we did slightly better than expected), so we nudge \(V(s)\) upward a little. If the TD error were negative, we'd nudge it downward.</p>
 
-          <h3>Key Points</h3>
-          <ul>
-            <li>Works in <strong>continuing</strong> (non-episodic) tasks — doesn't need episode end.</li>
-            <li><strong>Online</strong> — updates every step, can react quickly to new experience.</li>
-            <li>The "0" in TD(0) means 0 additional lookahead steps beyond the immediate next state.</li>
-            <li>Converges to the <em>maximum likelihood</em> Markov model estimate of V.</li>
-          </ul>
+          <h3>TD vs Monte Carlo vs Dynamic Programming</h3>
+          <p><strong>Dynamic Programming</strong> (Value Iteration) uses the full model — it knows \(P(s'|s,a)\) and computes expected values exactly. No trial-and-error experience needed, but you need the model.</p>
+          <p><strong>Monte Carlo</strong> methods run a full episode to completion, then update using the actual total return \(G_t = r_{t+1} + \gamma r_{t+2} + \cdots\). This is unbiased (uses real data, not estimates), but it's slow because you can't learn until the episode ends, and variance is high because the return depends on many random steps.</p>
+          <p><strong>TD(0)</strong> splits the difference. It learns online after every step (like MC wants to) but bootstraps off its own value estimates (like DP does). It's slightly biased — because \(V(s_{t+1})\) is an estimate, not the truth — but variance is much lower, and it works in continuing tasks with no natural episode end.</p>
+
+          <h3>Convergence</h3>
+          <p>TD(0) converges to the true \(V^\pi\) (the value function for the current policy \(\pi\)) under standard conditions: the learning rate \(\alpha\) must decrease over time following the Robbins-Monro conditions (\(\sum \alpha_t = \infty\), \(\sum \alpha_t^2 \lt \infty\)), and every state must be visited infinitely often. In practice with a fixed small \(\alpha\), it converges to a neighbourhood of \(V^\pi\).</p>
+
+          <h3>Applications</h3>
+          <p>TD(0) is used in game-playing (TD-Gammon famously used TD learning to master backgammon), real-time robot control, and anywhere you need online learning without a simulator. It's also the backbone of SARSA and Q-learning, which extend TD to control (learning policies, not just values).</p>
+
         </div>
       </div>
-    </div><!-- /s3-tab-1 -->
+    </div>
 
   </div><!-- /s3 -->
 
-  <!-- ═══════════════ SECTION II — Unit 4: Q3–Q7 ═══════════════ -->
+  <!-- ═══════ UNIT 4 ═══════ -->
   <div class="section-panel" id="s4">
     <div class="tabs" role="tablist">
       <button class="tab-btn active" onclick="showTab('s4',0)">Q3 · n-step TD</button>
-      <button class="tab-btn" onclick="showTab('s4',1)">Q4 · SARSA(λ) &amp; family</button>
-      <button class="tab-btn" onclick="showTab('s4',2)">Q5 · NN, Tile Coding, RBF</button>
-      <button class="tab-btn" onclick="showTab('s4',3)">Q6 · LSTD &amp; LSPI</button>
-      <button class="tab-btn" onclick="showTab('s4',4)">Q7 · Batch RL</button>
+      <button class="tab-btn"        onclick="showTab('s4',1)">Q4 · SARSA(λ) &amp; family</button>
+      <button class="tab-btn"        onclick="showTab('s4',2)">Q5 · NN, Tile Coding, RBF</button>
+      <button class="tab-btn"        onclick="showTab('s4',3)">Q6 · LSTD &amp; LSPI</button>
+      <button class="tab-btn"        onclick="showTab('s4',4)">Q7 · Batch RL</button>
     </div>
 
     <!-- Q3 -->
@@ -329,166 +271,153 @@
       <div class="question-block">
         <h2 class="q-title">Q3. Explain n-step TD Prediction with suitable examples and practical applications.</h2>
         <div class="answer-body">
-          <p><strong>Core idea:</strong> TD(0) looks 1 step ahead. Monte Carlo looks all the way to the end. n-step TD is the middle ground — look <em>n</em> steps ahead, then bootstrap off the estimated value there.</p>
 
-          <h3>n-step Return</h3>
+          <p>TD(0) only looks one step ahead before bootstrapping. Monte Carlo looks all the way to the end. n-step TD is the bridge — look \(n\) steps ahead, collect the actual rewards along the way, then bootstrap off the estimated value at the \(n\)-th state. The idea is that more steps means you're relying on real rewards rather than estimates, which reduces bias — but at the cost of higher variance because more random events are involved.</p>
+
+          <h3>The n-step Return</h3>
+          <p>After taking \(n\) steps from state \(s_t\), we collect rewards \(r_{t+1}, r_{t+2}, \ldots, r_{t+n}\) and end up in state \(s_{t+n}\). The n-step return is:</p>
           <div class="formula">
-            \[ G_t^{(n)} = r_{t+1} + \gamma r_{t+2} + \cdots + \gamma^{n-1} r_{t+n} + \gamma^n V(s_{t+n}) \]
+            \[ G_t^{(n)} = r_{t+1} + \gamma r_{t+2} + \gamma^2 r_{t+3} + \cdots + \gamma^{n-1} r_{t+n} + \gamma^n V(s_{t+n}) \]
           </div>
-          <p>Then update:</p>
-          <div class="formula">
-            \[ V(s_t) \leftarrow V(s_t) + \alpha \bigl[ G_t^{(n)} - V(s_t) \bigr] \]
+          <div class="eq-explain">
+            Each reward is discounted by one more power of \(\gamma\) because it's one step further in the future. The final term \(\gamma^n V(s_{t+n})\) is the bootstrap — we stop collecting real rewards there and use our current estimate of the value of the landing state. The update is then just like TD(0): \(V(s_t) \leftarrow V(s_t) + \alpha [G_t^{(n)} - V(s_t)]\).
           </div>
 
-          <h3>The Spectrum</h3>
+          <h3>The Bias-Variance Spectrum</h3>
           <div class="diagram">
             <svg viewBox="0 0 520 110">
-              <!-- Spectrum line -->
               <line x1="40" y1="55" x2="480" y2="55" stroke="var(--border)" stroke-width="2"/>
-              <!-- Markers -->
               <circle cx="40"  cy="55" r="7" fill="var(--accent)"/>
               <circle cx="180" cy="55" r="7" fill="var(--accent)"/>
               <circle cx="320" cy="55" r="7" fill="var(--accent)"/>
               <circle cx="480" cy="55" r="7" fill="var(--success)"/>
-
               <text x="40"  y="38" class="lbl" style="fill:var(--accent)">n=1</text>
-              <text x="40"  y="82" class="lbl-s">TD(0)</text>
-              <text x="40"  y="94" class="lbl-s">bootstrap V(s')</text>
-
+              <text x="40"  y="80" class="lbl-s">TD(0)</text>
+              <text x="40"  y="93" class="lbl-s">bootstrap V(s')</text>
               <text x="180" y="38" class="lbl" style="fill:var(--accent)">n=2</text>
-              <text x="180" y="82" class="lbl-s">2-step return</text>
-
+              <text x="180" y="80" class="lbl-s">2 real rewards</text>
               <text x="320" y="38" class="lbl" style="fill:var(--accent)">n=5</text>
-              <text x="320" y="82" class="lbl-s">5-step return</text>
-
+              <text x="320" y="80" class="lbl-s">5 real rewards</text>
               <text x="480" y="38" class="lbl" style="fill:var(--success)">n=∞</text>
-              <text x="480" y="82" class="lbl-s">Monte Carlo</text>
-              <text x="480" y="94" class="lbl-s">full episode</text>
-
-              <!-- bias/variance labels -->
-              <text x="260" y="15" class="lbl-s" style="fill:var(--text-muted)">← more bias, less variance · · · more variance, less bias →</text>
+              <text x="480" y="80" class="lbl-s">Monte Carlo</text>
+              <text x="480" y="93" class="lbl-s">full episode</text>
+              <text x="260" y="15" class="lbl-s" style="fill:var(--text-muted)">← more bias, less variance · · · · · · · more variance, less bias →</text>
             </svg>
-            <div class="caption">n=1 (TD) and n=∞ (MC) are the extremes. n-step TD lets you tune the trade-off.</div>
+            <div class="caption">n=1 is TD(0); n=∞ is Monte Carlo. n-step TD lets you tune where on this spectrum you sit.</div>
           </div>
 
-          <h3>Example: n=3</h3>
-          <p>You're in state \(s_0\), take actions, collect rewards \(r_1 = 2,\, r_2 = 1,\, r_3 = 3\), and land in \(s_3\) with \(V(s_3) = 5\). With \(\gamma = 0.9\):</p>
+          <p>The sweet spot for \(n\) is problem-dependent. If rewards are sparse and delayed (a robot only gets feedback after completing a task), larger \(n\) helps because you capture more of the actual reward signal before bootstrapping. If the environment is noisy and stochastic, smaller \(n\) is safer because longer sequences amplify variance.</p>
+
+          <h3>Example: n = 3</h3>
+          <p>Starting from state \(s_0\), we collect rewards \(r_1 = 2,\; r_2 = 1,\; r_3 = 3\) over three steps and land in \(s_3\) with \(V(s_3) = 5\). With \(\gamma = 0.9\):</p>
           <div class="formula">
-            \[ G_0^{(3)} = 2 + 0.9 \times 1 + 0.81 \times 3 + 0.729 \times 5 = 2 + 0.9 + 2.43 + 3.645 = 8.975 \]
+            \[ G_0^{(3)} = 2 + 0.9(1) + 0.81(3) + 0.729(5) = 2 + 0.9 + 2.43 + 3.645 = 8.975 \]
           </div>
+          <p>If \(V(s_0)\) was currently 7, the update would be \(V(s_0) \leftarrow 7 + \alpha(8.975 - 7)\), nudging it upward because the actual 3-step return was better than expected.</p>
+
+          <h3>Relationship to TD(λ)</h3>
+          <p>One practical problem with n-step TD is that you have to choose a single \(n\). TD(λ) (used in Q4) elegantly avoids this by computing a weighted average of <em>all</em> n-step returns simultaneously, controlled by the parameter \(\lambda\). It's the natural generalization of n-step TD.</p>
 
           <h3>Practical Applications</h3>
-          <ul>
-            <li><strong>Games:</strong> Backgammon, Go — n-step helps when rewards are delayed but episode end is very far away.</li>
-            <li><strong>Robotics:</strong> locomotion tasks where a fall (bad reward) happens a few steps after the wrong action.</li>
-            <li>Basis for <strong>TD(λ)</strong> — eligibility traces blend <em>all</em> n-step returns simultaneously (see Q4).</li>
-          </ul>
+          <p>n-step TD is used in environments where single-step feedback is too myopic — game playing like Go and Chess where important feedback comes several moves after an action, robotic locomotion tasks where a stumble happens a few steps after the wrong foot placement, and multi-step dialogue systems where a response only shows its quality after a few conversational turns. It's also the theoretical building block for understanding eligibility traces and TD(λ).</p>
 
-          <h3>Key Point</h3>
-          <p>The best \(n\) is problem-dependent. In practice, \(\lambda\)-returns (TD(λ)) are preferred because they avoid picking a single n and instead average over all of them.</p>
         </div>
       </div>
-    </div><!-- /s4-tab-0 -->
+    </div>
 
     <!-- Q4 -->
     <div class="tab-content" id="s4-tab-1">
       <div class="question-block">
         <h2 class="q-title">Q4. Explain SARSA(λ), Watkins' Q(λ), and True Online TD(λ).</h2>
         <div class="answer-body">
-          <p><strong>Core idea:</strong> Eligibility traces are a memory of recently visited states/actions. When you get a reward, you credit not just the current state but all recently visited ones — fading the credit with recency.</p>
 
-          <h3>Eligibility Trace</h3>
-          <p>For each state (or state-action pair), maintain a trace \(e(s)\) that increases when you visit and decays over time:</p>
+          <p>Instead of choosing one value of \(n\) for n-step TD, eligibility traces let you assign credit to <em>all</em> recently visited states simultaneously. Think of it like this: when a reward arrives, you don't just credit the state you're in right now — you credit every state you've been in recently, with the credit fading the further back you go. The <strong>eligibility trace</strong> \(e(s)\) is the bookkeeping mechanism for this.</p>
+
+          <h3>Eligibility Traces</h3>
           <div class="formula">
             \[ e_t(s) = \begin{cases} \gamma\lambda\, e_{t-1}(s) + 1 & \text{if } s = s_t \\ \gamma\lambda\, e_{t-1}(s) & \text{otherwise} \end{cases} \]
           </div>
-          <p>\(\lambda \in [0,1]\) controls how far back credit spreads. \(\lambda=0\) = TD(0), \(\lambda=1\) = MC.</p>
+          <div class="eq-explain">
+            When you visit a state, its trace jumps up by 1. For all states (visited or not), the trace decays by \(\gamma\lambda\) every timestep. So recently visited states have high traces; states visited long ago have traces near zero. When a reward comes, each state's value is updated proportionally to its trace — recent states get more credit.
+          </div>
 
           <div class="diagram">
             <svg viewBox="0 0 520 120">
-              <!-- Steps -->
               <text x="60"  y="18" class="lbl-s" style="fill:var(--text-muted)">t=1</text>
               <text x="160" y="18" class="lbl-s" style="fill:var(--text-muted)">t=2</text>
               <text x="260" y="18" class="lbl-s" style="fill:var(--text-muted)">t=3</text>
               <text x="360" y="18" class="lbl-s" style="fill:var(--text-muted)">t=4</text>
               <text x="460" y="18" class="lbl-s" style="fill:var(--text-muted)">reward!</text>
-
-              <!-- Time axis -->
               <line x1="30" y1="55" x2="500" y2="55" stroke="var(--border)" stroke-width="1.5"/>
-
-              <!-- State visits (circles) -->
               <circle cx="60"  cy="55" r="10" class="box"/>
               <circle cx="160" cy="55" r="10" class="box"/>
               <circle cx="260" cy="55" r="10" class="box"/>
               <circle cx="360" cy="55" r="10" class="box"/>
               <circle cx="460" cy="55" r="14" class="box3"/>
               <text x="460" y="59" class="lbl" style="fill:var(--warning)">r</text>
-
-              <!-- Eligibility bars (backward credit) -->
-              <rect x="45"  y="72" width="30" height="8" rx="2" fill="var(--accent)" opacity="0.25"/>
-              <rect x="145" y="72" width="30" height="8" rx="2" fill="var(--accent)" opacity="0.40"/>
-              <rect x="245" y="72" width="30" height="8" rx="2" fill="var(--accent)" opacity="0.60"/>
-              <rect x="345" y="72" width="30" height="8" rx="2" fill="var(--accent)" opacity="0.85"/>
+              <rect x="45"  y="72" width="30" height="8" rx="2" fill="var(--accent)" opacity="0.2"/>
+              <rect x="145" y="72" width="30" height="8" rx="2" fill="var(--accent)" opacity="0.38"/>
+              <rect x="245" y="72" width="30" height="8" rx="2" fill="var(--accent)" opacity="0.55"/>
+              <rect x="345" y="72" width="30" height="8" rx="2" fill="var(--accent)" opacity="0.78"/>
               <rect x="445" y="72" width="30" height="8" rx="2" fill="var(--accent)" opacity="1.0"/>
-
-              <text x="260" y="100" class="lbl-s" style="fill:var(--accent)">← credit fades backward (γλ decay) ←</text>
+              <text x="260" y="102" class="lbl-s" style="fill:var(--accent)">← credit decays backward with each (γλ) step</text>
             </svg>
-            <div class="caption">When a reward arrives, eligibility traces distribute credit backward. Recent states get more.</div>
+            <div class="caption">When a reward arrives at t=4+, credit flows backward. States visited recently (high trace) get more credit than older ones.</div>
           </div>
 
-          <h3>SARSA(λ) — On-policy</h3>
-          <p>Standard SARSA extended with eligibility traces. At each step:</p>
-          <ol>
-            <li>Compute TD error: \(\delta = r + \gamma Q(s', a') - Q(s,a)\)</li>
-            <li>Update eligibility trace: \(e(s,a) \mathrel{+}= 1\)</li>
-            <li>For <em>all</em> state-action pairs: \(Q(s,a) \leftarrow Q(s,a) + \alpha\delta\, e(s,a)\)</li>
-            <li>Decay all traces: \(e(s,a) \leftarrow \gamma\lambda\, e(s,a)\)</li>
-          </ol>
-          <p>Because it uses \((s,a,r,s',a')\) — the current policy's next action — it's <strong>on-policy</strong>.</p>
-
-          <h3>Watkins' Q(λ) — Off-policy</h3>
-          <p>Like Q-learning with traces. The key difference: if the agent takes a <em>non-greedy</em> (exploratory) action, the trace is <strong>cut to zero</strong>.</p>
+          <h3>SARSA(λ) — On-policy Control</h3>
+          <p>SARSA(λ) extends standard SARSA (which learns Q-values for state-action pairs using the current policy) with eligibility traces. At each timestep, you compute the TD error \(\delta = r + \gamma Q(s',a') - Q(s,a)\) as usual. But instead of only updating \(Q(s,a)\), you update <em>every</em> state-action pair proportionally to its trace:</p>
           <div class="formula">
-            \[ e_t(s,a) = \begin{cases} \gamma\lambda\, e_{t-1}(s,a) + 1 & \text{greedy action at }s_t \\ 0 & \text{non-greedy (exploratory) action} \end{cases} \]
+            \[ Q(s,a) \leftarrow Q(s,a) + \alpha\,\delta\,e(s,a) \quad \text{for all } (s,a) \]
           </div>
-          <p>This makes it off-policy (learns about greedy policy even while exploring), but cutting traces on exploration reduces efficiency.</p>
+          <p>The trace \(e(s,a)\) is then decayed: \(e \leftarrow \gamma\lambda\, e\). Because the next action \(a'\) comes from the current policy (on-policy), SARSA(λ) is safe to use with exploration — it converges even when the agent is exploring.</p>
+
+          <h3>Watkins' Q(λ) — Off-policy Control</h3>
+          <p>Q(λ) is the off-policy version — it tries to learn the optimal Q-function regardless of the exploration policy. The critical difference: whenever the agent takes a non-greedy (exploratory) action, the eligibility trace is cut to zero:</p>
+          <div class="formula">
+            \[ e_t(s,a) = \begin{cases} \gamma\lambda\, e_{t-1}(s,a) + 1 & \text{if } (s,a) = (s_t, a_t) \text{ and } a_t \text{ is greedy} \\ 0 & \text{if } a_t \text{ is non-greedy (exploration)} \end{cases} \]
+          </div>
+          <div class="eq-explain">
+            The reasoning: if you took an exploratory action, that experience doesn't belong to the optimal policy you're trying to learn. Crediting earlier states through an exploratory transition would be misleading — the trajectory you followed wasn't what the greedy policy would have done. So you wipe the slate clean. This makes Q(λ) off-policy, but it also means exploration reduces the effective lookback, hurting sample efficiency.
+          </div>
 
           <h3>True Online TD(λ)</h3>
-          <p>A corrected version of online TD(λ) that uses <strong>dutch traces</strong> instead of accumulating traces. It exactly matches the offline (batch) TD(λ) update — no approximation. It's the theoretically cleaner version.</p>
+          <p>Standard online TD(λ) accumulates traces in a way that slightly diverges from the theoretically ideal (offline) TD(λ). True Online TD(λ) corrects this by using <strong>dutch traces</strong>:</p>
           <div class="formula">
-            \[ e_t = \gamma\lambda\, e_{t-1} + (1 - \alpha\gamma\lambda\, e_{t-1}^\top x_t)\, x_t \]
+            \[ e_t = \gamma\lambda\, e_{t-1} + \bigl(1 - \alpha\gamma\lambda\, e_{t-1}^\top x_t\bigr)\, x_t \]
           </div>
-          <p>The correction term \((1 - \alpha\gamma\lambda\, e_{t-1}^\top x_t)\) prevents double-counting when the same state is visited multiple times.</p>
+          <div class="eq-explain">
+            The correction term \((1 - \alpha\gamma\lambda\, e_{t-1}^\top x_t)\) prevents a state from getting double-counted if it's visited multiple times in quick succession. With accumulating traces, revisiting a state quickly inflates its trace too much; dutch traces compensate. The result is that True Online TD(λ) exactly matches the offline TD(λ) solution — it's theoretically the cleanest version.
+          </div>
 
-          <h3>Summary Table</h3>
-          <ul>
-            <li><strong>SARSA(λ):</strong> on-policy, soft traces, practical and widely used</li>
-            <li><strong>Watkins' Q(λ):</strong> off-policy, cuts trace on exploration — loses some efficiency</li>
-            <li><strong>True Online TD(λ):</strong> theoretically exact, best for linear function approximation</li>
-          </ul>
+          <p>In summary: SARSA(λ) is the practical on-policy workhorse. Watkins' Q(λ) extends Q-learning to traces but at the cost of cutting them on exploration. True Online TD(λ) is the theoretically correct version, preferred when using linear function approximation where you need precise updates.</p>
+
         </div>
       </div>
-    </div><!-- /s4-tab-1 -->
+    </div>
 
     <!-- Q5 -->
     <div class="tab-content" id="s4-tab-2">
       <div class="question-block">
         <h2 class="q-title">Q5. Discuss Neural Networks, Tile Coding, and RBFs as function approximators in RL.</h2>
         <div class="answer-body">
-          <p><strong>Core idea:</strong> In large state spaces (robot joints, pixels), we can't store a value for every state. Instead, we <em>approximate</em> \(V(s)\) using a parameterized function \(\hat{V}(s, \mathbf{w})\) and learn the weights \(\mathbf{w}\).</p>
 
-          <h3>General Update (SGD)</h3>
+          <p>Once state spaces become large or continuous — a robot's joint angles, pixel inputs, sensor readings — we can't store a value for every single state in a table. Instead, we <strong>parameterize</strong> the value function as \(\hat{V}(s,\mathbf{w})\), where \(\mathbf{w}\) is a set of learnable weights. The learning algorithm then adjusts \(\mathbf{w}\) rather than individual table entries. The key question is: what form does \(\hat{V}\) take?</p>
+
+          <h3>The General Update</h3>
+          <p>Regardless of the approximator, the weight update follows stochastic gradient descent on the TD error:</p>
           <div class="formula">
-            \[ \mathbf{w} \leftarrow \mathbf{w} + \alpha\,\delta\,\nabla_{\mathbf{w}}\,\hat{V}(s, \mathbf{w}) \]
+            \[ \mathbf{w} \leftarrow \mathbf{w} + \alpha\,\delta_t\,\nabla_{\mathbf{w}}\,\hat{V}(s_t, \mathbf{w}) \]
           </div>
-          <p>The gradient \(\nabla_{\mathbf{w}}\hat{V}\) is what differs between the three methods below.</p>
+          <div class="eq-explain">
+            \(\delta_t\) is the TD error (the surprise). \(\nabla_{\mathbf{w}}\hat{V}\) is the gradient — it points in the direction of increasing \(\hat{V}\) with respect to the weights. We move the weights in that direction by a fraction \(\alpha\) scaled by the TD error. What differs between the three methods below is what \(\nabla_{\mathbf{w}}\hat{V}\) looks like.
+          </div>
 
           <h3>1. Tile Coding</h3>
-          <p>Divide the state space into <em>multiple overlapping grids</em> (tilings). Each state activates exactly one tile per tiling. The feature vector is binary — 1 for active tiles, 0 otherwise.</p>
+          <p>Tile coding divides the state space into multiple overlapping grids called <strong>tilings</strong>. Each tiling is offset from the others slightly. For any state \(s\), exactly one tile per tiling is "active" — the tile that \(s\) falls into. The feature vector \(\phi(s)\) is binary: 1 for each active tile, 0 for all others.</p>
 
           <div class="diagram">
-            <svg viewBox="0 0 520 160">
-              <!-- Tiling 1 (offset 0) -->
+            <svg viewBox="0 0 520 165">
               <g opacity="0.9">
                 <rect x="30"  y="30" width="60" height="60" fill="none" stroke="var(--accent)" stroke-width="1.2"/>
                 <rect x="90"  y="30" width="60" height="60" fill="none" stroke="var(--accent)" stroke-width="1.2"/>
@@ -498,200 +427,169 @@
                 <rect x="150" y="90" width="60" height="60" fill="none" stroke="var(--accent)" stroke-width="1.2"/>
                 <text x="120" y="20" class="lbl-s" style="fill:var(--accent)">Tiling 1</text>
               </g>
-              <!-- Tiling 2 (offset by half tile) -->
               <g opacity="0.9">
-                <rect x="60"  y="60" width="60" height="60" fill="none" stroke="var(--warning)" stroke-width="1.2" stroke-dasharray="4 2"/>
-                <rect x="120" y="60" width="60" height="60" fill="none" stroke="var(--warning)" stroke-width="1.2" stroke-dasharray="4 2"/>
+                <rect x="60"  y="60"  width="60" height="60" fill="none" stroke="var(--warning)" stroke-width="1.2" stroke-dasharray="4 2"/>
+                <rect x="120" y="60"  width="60" height="60" fill="none" stroke="var(--warning)" stroke-width="1.2" stroke-dasharray="4 2"/>
                 <rect x="60"  y="120" width="60" height="60" fill="none" stroke="var(--warning)" stroke-width="1.2" stroke-dasharray="4 2"/>
                 <rect x="120" y="120" width="60" height="60" fill="none" stroke="var(--warning)" stroke-width="1.2" stroke-dasharray="4 2"/>
-                <text x="150" y="20" class="lbl-s" style="fill:var(--warning)">Tiling 2 (offset)</text>
+                <text x="200" y="20" class="lbl-s" style="fill:var(--warning)">Tiling 2 (offset)</text>
               </g>
-              <!-- State point -->
               <circle cx="110" cy="100" r="5" fill="var(--success)"/>
-              <text x="116" y="98" class="lbl-s" style="fill:var(--success)">state s</text>
-              <!-- Activated tiles -->
-              <rect x="90"  y="90" width="60" height="60" fill="var(--accent)" opacity="0.2"/>
-              <rect x="60"  y="60" width="60" height="60" fill="var(--warning)" opacity="0.2"/>
-              <!-- Feature vector label -->
-              <text x="280" y="40" class="lbl-s" style="fill:var(--text-muted)">Feature vector φ(s):</text>
-              <rect x="270" y="50" width="20" height="15" rx="2" fill="var(--accent)" opacity="0.7"/>
-              <text x="280" y="62" class="lbl-s" style="fill:var(--text)">1</text>
-              <text x="298" y="62" class="lbl-s" style="fill:var(--text-muted)">(tiling 1 tile)</text>
-              <rect x="270" y="72" width="20" height="15" rx="2" fill="var(--warning)" opacity="0.7"/>
-              <text x="280" y="84" class="lbl-s" style="fill:var(--text)">1</text>
-              <text x="298" y="84" class="lbl-s" style="fill:var(--text-muted)">(tiling 2 tile)</text>
-              <rect x="270" y="94" width="20" height="15" rx="2" fill="var(--surface2)" stroke="var(--border)" stroke-width="1"/>
-              <text x="280" y="106" class="lbl-s" style="fill:var(--text)">0</text>
-              <text x="298" y="106" class="lbl-s" style="fill:var(--text-muted)">(other tiles...)</text>
-              <text x="320" y="140" class="lbl-s" style="fill:var(--text-muted)">\(\hat{V}(s,\mathbf{w}) = \mathbf{w}^\top \phi(s)\)</text>
+              <text x="116" y="97" class="lbl-s" style="fill:var(--success)">state s</text>
+              <rect x="90"  y="90"  width="60" height="60" fill="var(--accent)"  opacity="0.18"/>
+              <rect x="60"  y="60"  width="60" height="60" fill="var(--warning)" opacity="0.18"/>
+              <text x="310" y="35"  class="lbl-s" style="fill:var(--text-muted)">φ(s): active tiles only</text>
+              <rect x="295" y="48"  width="18" height="14" rx="2" fill="var(--accent)"  opacity="0.7"/>
+              <text x="320" y="60"  class="lbl-s" style="fill:var(--text)">1  (tiling 1 active tile)</text>
+              <rect x="295" y="70"  width="18" height="14" rx="2" fill="var(--warning)" opacity="0.7"/>
+              <text x="320" y="82"  class="lbl-s" style="fill:var(--text)">1  (tiling 2 active tile)</text>
+              <rect x="295" y="92"  width="18" height="14" rx="2" fill="var(--surface2)" stroke="var(--border)" stroke-width="1"/>
+              <text x="320" y="104" class="lbl-s" style="fill:var(--text)">0  (all other tiles)</text>
+              <text x="340" y="135" class="lbl-s" style="fill:var(--text-muted)">\(\hat{V}(s,\mathbf{w}) = \mathbf{w}^\top \phi(s)\) — simple dot product</text>
             </svg>
-            <div class="caption">State s activates one tile per tiling. Multiple tilings give fine-grained coverage.</div>
+            <div class="caption">State s activates one tile in each tiling. Multiple offset tilings give fine-grained, smooth coverage.</div>
           </div>
 
-          <p><strong>Advantage:</strong> Generalization is local and controllable. Fast to compute.</p>
+          <p>Because the value function is linear in the weights, \(\nabla_{\mathbf{w}}\hat{V} = \phi(s)\), and the update just increments the weights for active tiles. The overlapping tilings give smooth generalization — nearby states share many active tiles and therefore have similar estimated values. Tile coding is fast, interpretable, and works well for low-dimensional continuous spaces (like the Mountain Car or CartPole problems).</p>
 
           <h3>2. Radial Basis Functions (RBFs)</h3>
-          <p>Place <em>Gaussian bumps</em> at centers \(c_i\) across the state space. Each feature measures how close state \(s\) is to center \(c_i\):</p>
+          <p>RBFs place Gaussian "bumps" at chosen centers \(c_i\) across the state space. Each feature measures how close state \(s\) is to center \(c_i\):</p>
           <div class="formula">
             \[ \phi_i(s) = \exp\!\left(-\frac{\|s - c_i\|^2}{2\sigma_i^2}\right), \qquad \hat{V}(s,\mathbf{w}) = \sum_i w_i\,\phi_i(s) \]
           </div>
-          <p>\(\sigma_i\) controls how wide each bump is (how far the generalization reaches). Smooth, continuous generalization — good for continuous state spaces.</p>
+          <div class="eq-explain">
+            \(\|s - c_i\|^2\) is the squared distance from state \(s\) to center \(c_i\). The exponential makes features decay smoothly with distance — states near the center get a value close to 1, states far away get values near 0. \(\sigma_i\) controls the width of the bump: larger \(\sigma\) = more generous generalization across distance. Unlike tile coding's binary features, RBF features are continuous and smooth.
+          </div>
+          <p>RBFs give smooth, continuous generalization and are well-suited for environments with continuous dynamics. The downside is that center placement and \(\sigma\) values need to be chosen carefully, and it doesn't scale well to very high-dimensional spaces.</p>
 
           <h3>3. Neural Networks</h3>
-          <p>Use a NN to directly output \(\hat{V}(s,\mathbf{w})\) or \(\hat{Q}(s,a,\mathbf{w})\). Update weights via gradient descent on the TD error:</p>
-          <div class="formula">
-            \[ \mathbf{w} \leftarrow \mathbf{w} + \alpha\,\delta\,\nabla_{\mathbf{w}}\,\hat{Q}(s,a,\mathbf{w}) \]
-          </div>
-          <p>The gradient is computed via backpropagation. NNs can learn complex non-linear value functions — essential for pixel-based inputs (DQN).</p>
+          <p>A neural network directly maps the state \(s\) to \(\hat{V}(s,\mathbf{w})\) through multiple layers of learned transformations. The weights \(\mathbf{w}\) are all the parameters of the network — potentially millions of them. The gradient \(\nabla_{\mathbf{w}}\hat{V}\) is computed via backpropagation, and the weights update via the same TD gradient descent formula.</p>
+          <p>Neural networks can learn arbitrarily complex, non-linear value functions from raw inputs like pixels. This is what makes DQN possible — the Q-network takes raw Atari frames as input. However, combining neural networks with RL introduces instabilities (covered in Q7, Q8, Q9) that tile coding and RBFs avoid because they're linear and better understood theoretically.</p>
 
-          <h3>Comparison</h3>
-          <ul>
-            <li><strong>Tile Coding:</strong> simple, fast, interpretable, works well for low-dim continuous spaces</li>
-            <li><strong>RBF:</strong> smooth generalization, needs good center placement, still linear in weights</li>
-            <li><strong>NN:</strong> most powerful, handles raw inputs, but needs stabilization tricks (see Q8/Q9)</li>
-          </ul>
         </div>
       </div>
-    </div><!-- /s4-tab-2 -->
+    </div>
 
     <!-- Q6 -->
     <div class="tab-content" id="s4-tab-3">
       <div class="question-block">
         <h2 class="q-title">Q6. Explain LSTD and LSPI with suitable examples and applications.</h2>
         <div class="answer-body">
-          <p><strong>Core idea:</strong> Instead of gradient descent (slow, iterative), LSTD <em>solves directly</em> for the best weight vector \(\mathbf{w}\) in one shot using linear algebra. LSPI wraps LSTD in a policy iteration loop.</p>
 
-          <h3>Setup: Linear Value Function</h3>
-          <p>We assume \(\hat{V}(s, \mathbf{w}) = \mathbf{w}^\top \phi(s)\) — linear in features \(\phi(s)\).</p>
+          <p>Standard TD learning updates weights incrementally, one sample at a time, using gradient descent. LSTD takes a completely different approach: collect a batch of samples, then <strong>solve directly</strong> for the optimal weights in one shot using linear algebra. No learning rate, no iterations — just a matrix equation.</p>
 
-          <h3>LSTD — Least-Squares TD</h3>
-          <p>We want \(\mathbf{w}\) such that the TD fixed-point holds. This means solving:</p>
+          <h3>Setting: Linear Value Function</h3>
+          <p>We assume \(\hat{V}(s,\mathbf{w}) = \mathbf{w}^\top \phi(s)\), where \(\phi(s)\) is a feature vector. We want to find the weights \(\mathbf{w}\) such that the TD fixed-point condition holds across all samples.</p>
+
+          <h3>LSTD — Least-Squares Temporal Difference</h3>
+          <p>From a dataset of transitions \((s_t, r_t, s_{t+1})\), we accumulate two quantities:</p>
           <div class="formula">
-            \[ A\,\mathbf{w} = \mathbf{b} \]
+            \[ A = \sum_t \phi(s_t)\bigl[\phi(s_t) - \gamma\,\phi(s_{t+1})\bigr]^\top \]
           </div>
-          <p>where, accumulated over samples \((s_t, r_t, s_{t+1})\):</p>
           <div class="formula">
-            \[ A = \sum_t \phi(s_t)\bigl[\phi(s_t) - \gamma\,\phi(s_{t+1})\bigr]^\top, \qquad \mathbf{b} = \sum_t \phi(s_t)\,r_t \]
+            \[ \mathbf{b} = \sum_t \phi(s_t)\,r_t \]
           </div>
-          <p>Then \(\mathbf{w}^* = A^{-1}\mathbf{b}\). One matrix solve — no learning rate, no iterations needed.</p>
+          <div class="eq-explain">
+            \(A\) captures how the feature vector at the current state relates to the discounted feature vector at the next state — it encodes the TD structure of the problem. \(\mathbf{b}\) accumulates the immediate rewards weighted by features. Together they form the linear system \(A\mathbf{w} = \mathbf{b}\), whose solution \(\mathbf{w}^* = A^{-1}\mathbf{b}\) is the set of weights that best satisfies the TD equations across all samples at once.
+          </div>
 
-          <h3>Why LSTD &gt; plain TD?</h3>
-          <ul>
-            <li>No learning rate to tune</li>
-            <li>More sample-efficient (uses all data at once)</li>
-            <li>Stable: guaranteed to converge for linear approximation</li>
-          </ul>
-          <p><strong>Downside:</strong> \(A\) is \(d \times d\) (d = feature size). Inverting it costs \(O(d^3)\) — not scalable to huge feature spaces.</p>
+          <p>The entire dataset is used in one matrix inversion. No learning rate to tune, no convergence to wait for across many passes. This makes LSTD much more <strong>sample efficient</strong> than incremental TD — every data point is fully exploited.</p>
+
+          <p>The main limitation is computational: the matrix \(A\) is \(d \times d\) where \(d\) is the number of features. Inverting it costs \(O(d^3)\), so LSTD becomes expensive with thousands of features. For small to medium feature sets (up to a few hundred), it's excellent.</p>
 
           <h3>LSPI — Least-Squares Policy Iteration</h3>
-          <p>Full policy iteration using LSTD for evaluation:</p>
-          <ol>
-            <li><strong>Policy Evaluation:</strong> run LSTD on samples from the current policy \(\pi\) to get \(\hat{Q}^\pi(s,a,\mathbf{w})\)</li>
-            <li><strong>Policy Improvement:</strong> \(\pi'(s) = \arg\max_a \hat{Q}^\pi(s,a,\mathbf{w})\)</li>
-            <li>Repeat until policy stops changing</li>
-          </ol>
+          <p>LSTD evaluates a given policy (computes its Q-function). LSPI wraps LSTD in the classic policy iteration loop to find the <em>optimal</em> policy:</p>
 
           <div class="diagram">
             <svg viewBox="0 0 520 120">
-              <rect x="40"  y="35" width="140" height="50" rx="8" class="box"/>
-              <text x="110" y="58" class="lbl">Policy Evaluation</text>
-              <text x="110" y="74" class="lbl-s">(LSTD → solve Aw=b)</text>
-
-              <rect x="340" y="35" width="140" height="50" rx="8" class="box2"/>
-              <text x="410" y="58" class="lbl">Policy Improvement</text>
-              <text x="410" y="74" class="lbl-s">(greedy w.r.t. Q̂)</text>
-
-              <path d="M 180 55 Q 260 20 340 55" class="arr" style="stroke:var(--accent)"/>
-              <text x="260" y="18" class="lbl-s" style="fill:var(--accent)">new weights w</text>
-
-              <path d="M 340 75 Q 260 110 180 75" class="arr" style="stroke:var(--success)"/>
-              <text x="260" y="110" class="lbl-s" style="fill:var(--success)">new policy π'</text>
+              <rect x="40"  y="35" width="155" height="55" rx="8" class="box"/>
+              <text x="117" y="58" class="lbl">Policy Evaluation</text>
+              <text x="117" y="73" class="lbl-s">LSTD → solve Aw = b</text>
+              <text x="117" y="85" class="lbl-s">get Q̂(s,a; w)</text>
+              <rect x="325" y="35" width="155" height="55" rx="8" class="box2"/>
+              <text x="402" y="58" class="lbl">Policy Improvement</text>
+              <text x="402" y="73" class="lbl-s">π'(s) = argmax_a Q̂(s,a)</text>
+              <text x="402" y="85" class="lbl-s">(greedy update)</text>
+              <path d="M 195 55 Q 260 18 325 55" class="arr" style="stroke:var(--accent)"/>
+              <text x="260" y="14" class="lbl-s" style="fill:var(--accent)">new weights w</text>
+              <path d="M 325 78 Q 260 108 195 78" class="arr" style="stroke:var(--success)"/>
+              <text x="260" y="108" class="lbl-s" style="fill:var(--success)">updated policy π'</text>
             </svg>
-            <div class="caption">LSPI alternates between LSTD evaluation and greedy policy improvement.</div>
+            <div class="caption">LSPI alternates: LSTD evaluates the current policy, then the greedy step improves it.</div>
           </div>
 
+          <p>Crucially, LSPI can work <strong>off-policy</strong> — the collected dataset doesn't need to come from the policy being evaluated. You collect samples once (using any policy, even random exploration), and LSPI uses that same fixed dataset for all iterations of policy improvement. This is extremely valuable in settings where collecting data is expensive.</p>
+
           <h3>Applications</h3>
-          <ul>
-            <li>Medical treatment policies (small dataset, need sample efficiency)</li>
-            <li>Helicopter autopilot (Ng et al.) — few real-world samples, LSPI trains efficiently</li>
-            <li>Finance: portfolio management with moderate feature sets</li>
-          </ul>
+          <p>LSPI has been used in medical treatment optimization (where data is scarce and limited by clinical trial constraints), helicopter autopilot control (Ng et al., 2006 — LSPI trained on a small number of real flight samples), and financial portfolio management. Anywhere you have a limited dataset and can't afford online trial-and-error, the sample efficiency of LSTD/LSPI makes a strong case for using it.</p>
+
         </div>
       </div>
-    </div><!-- /s4-tab-3 -->
+    </div>
 
     <!-- Q7 -->
     <div class="tab-content" id="s4-tab-4">
       <div class="question-block">
         <h2 class="q-title">Q7. Analyze Batch RL convergence — its principles, challenges, and practical applications.</h2>
         <div class="answer-body">
-          <p><strong>Core idea:</strong> Instead of updating from one sample at a time, Batch RL collects a dataset of experiences first, then trains on the full dataset repeatedly. Like supervised learning, but for RL.</p>
 
-          <h3>Principle: Fitted Value Iteration (FVI)</h3>
+          <p>Batch RL (also called offline RL) decouples data collection from learning. Instead of updating the value function after every step like online TD, you collect a fixed dataset of transitions first, then train on that dataset repeatedly — more like how supervised learning works than how online RL works.</p>
+
+          <h3>Core Principle: Fitted Value Iteration (FVI)</h3>
+          <p>The most general batch RL algorithm is Fitted Value Iteration. Given a fixed dataset \(\mathcal{D} = \{(s, a, r, s')\}\):</p>
           <ol>
-            <li>Collect dataset \(\mathcal{D} = \{(s, a, r, s')\}\) using any policy (even random).</li>
-            <li>Compute targets: \(y = r + \gamma\max_{a'} Q(s', a')\) using current Q.</li>
-            <li>Fit a regression model to predict \(y\) from \((s,a)\) — this is your new Q.</li>
-            <li>Repeat from step 2 until convergence.</li>
+            <li>Compute target values using the current Q-function: \(y_i = r_i + \gamma \max_{a'} Q(s_i', a')\)</li>
+            <li>Treat \((s_i, a_i) \to y_i\) as a supervised regression problem and train a new Q-function on it</li>
+            <li>Replace the old Q-function with the new one and repeat from step 1</li>
           </ol>
+          <p>The key phrase is "fixed dataset" — you never collect new data between iterations. You just reuse the same \(\mathcal{D}\) with increasingly refined targets.</p>
 
           <div class="diagram">
             <svg viewBox="0 0 520 120">
-              <rect x="20"  y="35" width="110" height="50" rx="8" class="box3"/>
-              <text x="75"  y="58" class="lbl">Dataset 𝒟</text>
-              <text x="75"  y="74" class="lbl-s">(fixed, reused)</text>
-
-              <rect x="200" y="35" width="120" height="50" rx="8" class="box"/>
-              <text x="260" y="58" class="lbl">Compute</text>
-              <text x="260" y="74" class="lbl-s">targets y = r+γ max Q</text>
-
-              <rect x="390" y="35" width="110" height="50" rx="8" class="box2"/>
-              <text x="445" y="58" class="lbl">Regress</text>
-              <text x="445" y="74" class="lbl-s">Q ← fit(𝒟, y)</text>
-
-              <line x1="130" y1="60" x2="198" y2="60" class="arr"/>
-              <line x1="320" y1="60" x2="388" y2="60" class="arr"/>
-              <path d="M 445 85 Q 445 108 260 108 Q 90 108 75 87" class="arr" style="stroke:var(--warning)"/>
-              <text x="265" y="118" class="lbl-s" style="fill:var(--warning)">iterate</text>
+              <rect x="20"  y="35" width="115" height="55" rx="8" class="box3"/>
+              <text x="77"  y="57" class="lbl">Dataset 𝒟</text>
+              <text x="77"  y="72" class="lbl-s">(fixed, not updated)</text>
+              <text x="77"  y="84" class="lbl-s">reused each iteration</text>
+              <rect x="200" y="35" width="130" height="55" rx="8" class="box"/>
+              <text x="265" y="57" class="lbl">Compute targets</text>
+              <text x="265" y="72" class="lbl-s">y = r + γ max Q(s')</text>
+              <rect x="395" y="35" width="110" height="55" rx="8" class="box2"/>
+              <text x="450" y="57" class="lbl">Fit new Q</text>
+              <text x="450" y="72" class="lbl-s">regression on</text>
+              <text x="450" y="84" class="lbl-s">(s,a) → y</text>
+              <line x1="135" y1="62" x2="198" y2="62" class="arr"/>
+              <line x1="330" y1="62" x2="393" y2="62" class="arr"/>
+              <path d="M 450 90 Q 450 112 265 112 Q 90 112 77 92" class="arr" style="stroke:var(--warning)"/>
+              <text x="265" y="122" class="lbl-s" style="fill:var(--warning)">iterate with updated Q</text>
             </svg>
-            <div class="caption">Batch RL loops over a fixed dataset, iteratively refining the Q function via regression.</div>
+            <div class="caption">FVI loops over the fixed dataset with better and better targets each time.</div>
           </div>
 
-          <h3>Convergence — When it works</h3>
-          <ul>
-            <li><strong>Linear function approximation:</strong> FVI with linear models converges (proved).</li>
-            <li><strong>LSPI</strong> (from Q6) is a batch method — guaranteed convergence with linear FA.</li>
-            <li><strong>Tabular case:</strong> always converges (equivalent to value iteration).</li>
-          </ul>
+          <h3>When Does It Converge?</h3>
+          <p>With <strong>tabular</strong> representations, FVI is identical to value iteration and provably converges. With <strong>linear function approximation</strong> and on-policy data, it also converges — LSPI (Q6) is a special case of batch RL with proved convergence guarantees. The theory is solid in these cases because the function class is well-behaved.</p>
 
-          <h3>Convergence — Challenges (Deadly Triad)</h3>
-          <p>When you combine all three: <em>function approximation + bootstrapping + off-policy data</em>, convergence breaks down:</p>
-          <ul>
-            <li><strong>Extrapolation error:</strong> Q values for unseen state-actions can blow up.</li>
-            <li><strong>Distribution mismatch:</strong> data was collected under a different policy — the bootstrap targets may be badly off.</li>
-            <li><strong>Neural FVI</strong> (NFQ, batch DQN): can diverge or oscillate without careful regularization.</li>
-          </ul>
+          <h3>The Deadly Triad — When It Breaks</h3>
+          <p>Convergence breaks down when you simultaneously use all three of: <strong>function approximation</strong> (especially neural networks), <strong>bootstrapping</strong> (using Q estimates to compute targets), and <strong>off-policy data</strong> (data from a different policy than the one being learned). This combination is called the deadly triad, and it can cause Q-values to diverge or oscillate wildly.</p>
+          <p>The intuition: neural function approximation generalizes — updating one state's Q-value can inadvertently change the Q-values for many other states. Bootstrapped targets are themselves moving (because Q is being updated). And off-policy data means the distribution of states you're training on doesn't match the distribution your policy would actually visit. These three effects compound and can send Q-values to infinity.</p>
+          <p>Practical neural FVI (like Neural Fitted Q-Iteration, or batch variants of DQN) mitigates this with careful regularization, conservative target updates, and techniques like CQL (Conservative Q-Learning) that penalize overestimation of out-of-distribution actions.</p>
 
           <h3>Practical Applications</h3>
-          <ul>
-            <li><strong>Healthcare:</strong> learn policies from patient records — you can't run live experiments.</li>
-            <li><strong>Autonomous driving:</strong> offline learning from logged driving data before deployment.</li>
-            <li><strong>Atari:</strong> Neural Fitted Q (NFQ) was an early batch approach to game playing.</li>
-          </ul>
+          <p>Batch RL is essential wherever you cannot safely run a learning agent online. In <strong>healthcare</strong>, you can't experiment on patients — but you can learn policies from historical electronic health records. In <strong>autonomous driving</strong>, you learn from logged human driving data before deploying the system on real roads. In <strong>industrial control</strong>, you learn from historical sensor data without risking equipment damage during exploration. The ability to learn from a fixed historical dataset, without any interaction with the live system, is what makes Batch RL uniquely valuable in safety-critical domains.</p>
+
         </div>
       </div>
-    </div><!-- /s4-tab-4 -->
+    </div>
 
   </div><!-- /s4 -->
 
-  <!-- ═══════════════ SECTION III — Unit 5: Q8–Q12 ═══════════════ -->
+  <!-- ═══════ UNIT 5 ═══════ -->
   <div class="section-panel" id="s5">
     <div class="tabs" role="tablist">
       <button class="tab-btn active" onclick="showTab('s5',0)">Q8 · Exp Replay &amp; Target Net</button>
-      <button class="tab-btn" onclick="showTab('s5',1)">Q9 · DQN Family</button>
-      <button class="tab-btn" onclick="showTab('s5',2)">Q10 · Actor-Critic</button>
-      <button class="tab-btn" onclick="showTab('s5',3)">Q11 · POMDPs</button>
-      <button class="tab-btn" onclick="showTab('s5',4)">Q12 · Options &amp; MAXQ</button>
+      <button class="tab-btn"        onclick="showTab('s5',1)">Q9 · DQN Family</button>
+      <button class="tab-btn"        onclick="showTab('s5',2)">Q10 · Actor-Critic</button>
+      <button class="tab-btn"        onclick="showTab('s5',3)">Q11 · POMDPs</button>
+      <button class="tab-btn"        onclick="showTab('s5',4)">Q12 · Options &amp; MAXQ</button>
     </div>
 
     <!-- Q8 -->
@@ -699,423 +597,360 @@
       <div class="question-block">
         <h2 class="q-title">Q8. Explain Experience Replay and Fixed Target Networks.</h2>
         <div class="answer-body">
-          <p><strong>Core idea:</strong> These are two tricks that make training deep Q-networks (DQN) stable. Without them, the training diverges. Together, they tame the deadly trio of correlation, non-stationarity, and feedback loops.</p>
 
-          <h3>Problem 1 — Correlated Samples</h3>
-          <p>If you train on \((s_1, a_1, r_1, s_2), (s_2, a_2, r_2, s_3), \ldots\) in order, consecutive samples are highly correlated (you're still in the same room of Atari). Gradient descent expects i.i.d. samples — correlation breaks it.</p>
+          <p>When you try to train a neural network with basic Q-learning, two specific problems make it catastrophically unstable. Experience replay and fixed target networks are the two surgical fixes that address each problem independently. Together, they are what made DQN work.</p>
+
+          <h3>Problem 1: Correlated Training Samples</h3>
+          <p>Online Q-learning trains on transitions in the order they occur: \((s_1,a_1,r_1,s_2)\), then \((s_2,a_2,r_2,s_3)\), and so on. These consecutive samples are <strong>highly correlated</strong> — they come from the same trajectory, the same environment region. Neural network training assumes approximately i.i.d. (independent, identically distributed) data. When samples are correlated, gradient descent overfits to the current region of experience and forgets earlier parts of the state space. The network oscillates rather than converges.</p>
 
           <h3>Fix: Experience Replay</h3>
-          <p>Store every transition \((s, a, r, s')\) in a circular <strong>replay buffer</strong> \(\mathcal{D}\) (typically 1M entries). At each training step, sample a random mini-batch from \(\mathcal{D}\):</p>
+          <p>Maintain a <strong>replay buffer</strong> \(\mathcal{D}\) — a circular buffer that stores the last \(N\) transitions (typically \(N = 10^6\)). At each training step, instead of learning from the most recent transition, sample a random mini-batch from \(\mathcal{D}\):</p>
 
           <div class="diagram">
             <svg viewBox="0 0 520 130">
-              <!-- Environment -->
               <rect x="20" y="50" width="100" height="45" rx="8" class="box3"/>
               <text x="70" y="70" class="lbl">Env</text>
-              <text x="70" y="85" class="lbl-s">(s,a,r,s')</text>
-
-              <!-- Buffer -->
-              <rect x="175" y="30" width="140" height="80" rx="8" class="box"/>
-              <text x="245" y="55" class="lbl">Replay Buffer 𝒟</text>
-              <text x="245" y="72" class="lbl-s">[(s₁,a₁,r₁,s₁'), …,</text>
-              <text x="245" y="87" class="lbl-s">(sₙ,aₙ,rₙ,sₙ')]</text>
-              <text x="245" y="102" class="lbl-s">capacity: 1M</text>
-
-              <!-- Arrows env → buffer -->
-              <line x1="120" y1="70" x2="173" y2="70" class="arr"/>
-              <text x="143" y="62" class="lbl-s">push</text>
-
-              <!-- Network -->
-              <rect x="370" y="50" width="120" height="45" rx="8" class="box2"/>
-              <text x="430" y="70" class="lbl">Q-Network</text>
-              <text x="430" y="85" class="lbl-s">(training)</text>
-
-              <!-- Buffer → network (random sample) -->
-              <path d="M 315 85 Q 340 115 370 80" class="arr" style="stroke:var(--accent)"/>
-              <text x="328" y="118" class="lbl-s" style="fill:var(--accent)">random mini-batch</text>
+              <text x="70" y="84" class="lbl-s">(s,a,r,s')</text>
+              <rect x="180" y="28" width="150" height="80" rx="8" class="box"/>
+              <text x="255" y="52" class="lbl">Replay Buffer 𝒟</text>
+              <text x="255" y="68" class="lbl-s">stores last N transitions</text>
+              <text x="255" y="82" class="lbl-s">N ≈ 1,000,000</text>
+              <text x="255" y="96" class="lbl-s">(circular — oldest dropped)</text>
+              <rect x="390" y="50" width="110" height="45" rx="8" class="box2"/>
+              <text x="445" y="70" class="lbl">Q-Network</text>
+              <text x="445" y="84" class="lbl-s">(training)</text>
+              <line x1="120" y1="70" x2="178" y2="68" class="arr"/>
+              <text x="148" y="60" class="lbl-s">push</text>
+              <path d="M 330 88 Q 355 118 390 80" class="arr" style="stroke:var(--accent)"/>
+              <text x="345" y="118" class="lbl-s" style="fill:var(--accent)">random mini-batch (32–256)</text>
             </svg>
-            <div class="caption">Each training step samples a random mini-batch from the buffer — breaks correlation.</div>
+            <div class="caption">New transitions are pushed into the buffer. Training samples are drawn randomly — breaking correlation.</div>
           </div>
 
-          <p><strong>Benefits:</strong> data efficiency (each sample reused many times), decorrelation.</p>
+          <p>Random sampling from the buffer breaks the correlation. Each mini-batch is drawn from a wide spread of past experience, giving the network a balanced view of the state space. As a bonus, each transition can be reused many times, making the algorithm much more data-efficient.</p>
 
-          <h3>Problem 2 — Moving Targets</h3>
-          <p>In DQN, the loss is \(\bigl[r + \gamma \max_{a'} Q(s', a'; \theta) - Q(s,a; \theta)\bigr]^2\). The <em>target</em> \(r + \gamma \max Q\) uses the same network \(\theta\) we're updating. So every gradient step changes both the prediction <em>and</em> the target simultaneously — like chasing a moving goalposts. Very unstable.</p>
+          <h3>Problem 2: Non-Stationary Targets</h3>
+          <p>The Q-learning loss involves a target value: \(y = r + \gamma \max_{a'} Q(s', a';\,\theta)\). The problem is that \(\theta\) — the network weights we're trying to update — also appears inside the target. Every gradient step that improves \(Q(s,a;\theta)\) simultaneously changes \(y\), which is computed from the same \(\theta\). You're updating your estimate while the goalposts keep moving. This causes oscillation and divergence.</p>
 
           <h3>Fix: Fixed Target Network</h3>
-          <p>Keep a second <strong>target network</strong> \(\theta^-\) that is a frozen copy of the main network:</p>
+          <p>Keep a second network — the <strong>target network</strong> with weights \(\theta^-\) — that is a frozen copy of the main network. Use \(\theta^-\) to compute targets:</p>
           <div class="formula">
             \[ y = r + \gamma \max_{a'} Q(s', a';\, \theta^-) \]
           </div>
-          <p>Update \(\theta\) via gradient descent on \((y - Q(s,a;\theta))^2\), but <strong>freeze \(\theta^-\)</strong> for \(C\) steps (e.g. every 10,000 steps, copy \(\theta \to \theta^-\)).</p>
+          <div class="eq-explain">
+            The target now uses \(\theta^-\) (frozen), while gradients update only \(\theta\) (the main network). Since \(\theta^-\) is frozen for \(C\) steps (e.g., every 10,000 steps we copy \(\theta \to \theta^-\)), the targets are stable for those \(C\) steps. This gives the main network time to converge toward stable targets before they shift again.
+          </div>
 
           <div class="diagram">
             <svg viewBox="0 0 520 110">
-              <rect x="40"  y="30" width="140" height="55" rx="8" class="box2"/>
-              <text x="110" y="53" class="lbl">Main Network θ</text>
-              <text x="110" y="68" class="lbl-s">updated every step</text>
-              <text x="110" y="82" class="lbl-s">(via backprop)</text>
-
-              <rect x="330" y="30" width="150" height="55" rx="8" class="box3"/>
-              <text x="405" y="53" class="lbl">Target Network θ⁻</text>
-              <text x="405" y="68" class="lbl-s">frozen for C steps</text>
-              <text x="405" y="82" class="lbl-s">(provides stable y)</text>
-
-              <!-- Copy arrow -->
-              <path d="M 180 57 Q 260 15 330 57" class="arr" style="stroke:var(--warning)"/>
-              <text x="255" y="12" class="lbl-s" style="fill:var(--warning)">copy θ→θ⁻ every C steps</text>
+              <rect x="40"  y="28" width="155" height="58" rx="8" class="box2"/>
+              <text x="117" y="50" class="lbl">Main Network θ</text>
+              <text x="117" y="65" class="lbl-s">updated every step</text>
+              <text x="117" y="80" class="lbl-s">via backpropagation</text>
+              <rect x="325" y="28" width="155" height="58" rx="8" class="box3"/>
+              <text x="402" y="50" class="lbl">Target Network θ⁻</text>
+              <text x="402" y="65" class="lbl-s">frozen for C steps</text>
+              <text x="402" y="80" class="lbl-s">provides stable targets y</text>
+              <path d="M 195 55 Q 260 12 325 55" class="arr" style="stroke:var(--warning)"/>
+              <text x="260" y="10" class="lbl-s" style="fill:var(--warning)">hard copy θ → θ⁻ every C steps</text>
             </svg>
-            <div class="caption">Target network is a lagged copy. Targets are stable for C steps, preventing feedback loops.</div>
+            <div class="caption">θ⁻ is a lagged snapshot of θ. Stable targets for C steps prevent the feedback loop.</div>
           </div>
 
-          <h3>Key Points</h3>
-          <ul>
-            <li>Both tricks are needed together — replay alone doesn't fix moving targets.</li>
-            <li>Replay buffer size and target update frequency C are important hyperparameters.</li>
-            <li>Together, they were the critical innovations that made DQN work on Atari.</li>
-          </ul>
+          <p>It's worth emphasizing that these two tricks address completely different problems — replay handles sample correlation, target networks handle non-stationary targets. You need both. Using only replay still gives moving targets; using only the target network still gives correlated samples. Together, they are the minimal set of changes that stabilize deep Q-learning.</p>
+
         </div>
       </div>
-    </div><!-- /s5-tab-0 -->
+    </div>
 
     <!-- Q9 -->
     <div class="tab-content" id="s5-tab-1">
       <div class="question-block">
         <h2 class="q-title">Q9. Compare DQN, Double DQN, and Dueling DQN with examples and applications.</h2>
         <div class="answer-body">
-          <p><strong>Core idea:</strong> DQN was the breakthrough. Double DQN fixes its optimism bias. Dueling DQN restructures the network to learn faster. Each is a surgical improvement to the one before.</p>
 
-          <h3>DQN (Deep Q-Network)</h3>
-          <p>Standard Q-learning with a neural network, experience replay, and a target network (see Q8). Loss:</p>
+          <p>DQN was the breakthrough that showed deep RL could work at scale. Double DQN identified and fixed a specific bias in DQN's update rule. Dueling DQN restructured the network architecture to learn more efficiently. Each is a targeted improvement over the previous one — none is a full redesign.</p>
+
+          <h3>DQN (Deep Q-Network, 2013–2015)</h3>
+          <p>DQN combines Q-learning with a deep convolutional neural network, experience replay, and a target network (see Q8). The training loss is:</p>
           <div class="formula">
-            \[ \mathcal{L} = \left(r + \gamma \max_{a'} Q(s', a';\,\theta^-) - Q(s,a;\,\theta)\right)^2 \]
+            \[ \mathcal{L}(\theta) = \mathbb{E}\!\left[\left(r + \gamma \max_{a'} Q(s', a';\,\theta^-) - Q(s,a;\,\theta)\right)^2\right] \]
           </div>
-          <p><strong>Problem:</strong> \(\max_{a'} Q(s',a';\theta^-)\) uses the same network to both <em>select</em> the best action and <em>evaluate</em> how good it is. This causes overestimation — values get systematically inflated.</p>
+          <div class="eq-explain">
+            We want \(Q(s,a)\) to equal the TD target \(r + \gamma \max_{a'} Q(s',a';\theta^-)\). The loss is the squared difference between them. The target network \(\theta^-\) is frozen to stabilize training. Minimizing this loss over a replay buffer of experiences trains the network to predict Q-values correctly.
+          </div>
+          <p><strong>Known problem:</strong> The \(\max_{a'}\) operation uses the target network \(\theta^-\) to both <em>select</em> the best action (the argmax) and <em>evaluate</em> how good that action is (the Q-value at the argmax). When Q-values are noisy (especially early in training), the max of noisy estimates is systematically higher than the true max. This causes <strong>overestimation bias</strong> — DQN values are consistently too optimistic.</p>
 
-          <h3>Double DQN</h3>
-          <p>Separate action <em>selection</em> (main network \(\theta\)) from action <em>evaluation</em> (target network \(\theta^-\)):</p>
+          <h3>Double DQN (2015)</h3>
+          <p>The fix is simple: use the <em>main</em> network to select the action, but the <em>target</em> network to evaluate it:</p>
           <div class="formula">
-            \[ y = r + \gamma\, Q\!\left(s',\; \underbrace{\arg\max_{a'} Q(s',a';\,\theta)}_{\text{select with } \theta};\; \underbrace{\theta^-}_{\text{evaluate with } \theta^-}\right) \]
+            \[ y = r + \gamma\, Q\!\left(s',\; \arg\max_{a'} Q(s',a';\,\theta);\; \theta^-\right) \]
           </div>
-          <p>Same two networks, just used differently. Reduces overestimation significantly. One line of code change from DQN.</p>
+          <div class="eq-explain">
+            Read this in two parts: first, \(\arg\max_{a'} Q(s',a';\theta)\) — the main network picks which action looks best. Second, \(Q(s', \text{that action};\, \theta^-)\) — the target network evaluates how good that chosen action actually is. Because two separate networks are involved, the overestimation from taking the max of noisy values is reduced significantly. If the main network overestimates action \(a^*\), the target network is likely to give a more conservative estimate for it.
+          </div>
+          <p>This is a one-line change from DQN. The architecture and everything else stays the same. In practice, Double DQN consistently outperforms DQN, especially in later training where overestimation in DQN accumulates and causes instability.</p>
 
-          <h3>Dueling DQN</h3>
-          <p>Splits the Q-value into two components inside the network architecture:</p>
+          <h3>Dueling DQN (2016)</h3>
+          <p>Dueling DQN keeps the same training objective as DQN/Double DQN but restructures the network to decompose Q into two components:</p>
           <div class="formula">
             \[ Q(s,a;\,\theta) = V(s;\,\theta) + \left[A(s,a;\,\theta) - \frac{1}{|\mathcal{A}|}\sum_{a'} A(s,a';\,\theta)\right] \]
           </div>
-          <ul>
-            <li>\(V(s)\) = <strong>state value</strong> — how good is being in state \(s\) at all</li>
-            <li>\(A(s,a)\) = <strong>advantage</strong> — how much better is action \(a\) vs. average</li>
-          </ul>
-          <p>The mean subtraction is for identifiability (otherwise V and A can't be uniquely recovered from Q). This helps in states where the action doesn't matter much — V is learned without forcing A to be all zeros.</p>
-
-          <div class="diagram">
-            <svg viewBox="0 0 520 160">
-              <!-- DQN arch -->
-              <rect x="20" y="10" width="80" height="140" rx="6" class="box"/>
-              <text x="60" y="70" class="lbl">CNN /</text>
-              <text x="60" y="85" class="lbl">MLP</text>
-              <text x="60" y="100" class="lbl-s">(shared)</text>
-              <text x="60" y="15" class="lbl-s" style="fill:var(--accent)">DQN</text>
-
-              <rect x="130" y="55" width="80" height="50" rx="6" class="box"/>
-              <text x="170" y="78" class="lbl">Q(s,a)</text>
-              <text x="170" y="93" class="lbl-s">one head</text>
-              <line x1="100" y1="80" x2="128" y2="80" class="arr"/>
-
-              <!-- Dueling arch -->
-              <rect x="280" y="10" width="80" height="140" rx="6" class="box"/>
-              <text x="320" y="70" class="lbl">CNN /</text>
-              <text x="320" y="85" class="lbl">MLP</text>
-              <text x="320" y="100" class="lbl-s">(shared)</text>
-              <text x="320" y="15" class="lbl-s" style="fill:var(--success)">Dueling</text>
-
-              <rect x="390" y="20" width="100" height="40" rx="6" class="box2"/>
-              <text x="440" y="38" class="lbl">V(s)</text>
-              <text x="440" y="53" class="lbl-s">state value</text>
-
-              <rect x="390" y="100" width="100" height="40" rx="6" class="box3"/>
-              <text x="440" y="118" class="lbl">A(s,a)</text>
-              <text x="440" y="133" class="lbl-s">advantage</text>
-
-              <line x1="360" y1="60"  x2="388" y2="40"  class="arr"/>
-              <line x1="360" y1="100" x2="388" y2="120" class="arr"/>
-
-              <!-- combine -->
-              <text x="440" y="82" class="lbl-s" style="fill:var(--text-muted)">combine →</text>
-              <text x="440" y="95" class="lbl-s" style="fill:var(--text-muted)">Q = V + A−mean</text>
-            </svg>
-            <div class="caption">DQN: single Q-head. Dueling: two heads (V and A) combined. Same loss, better learning.</div>
+          <div class="eq-explain">
+            \(V(s)\) is the <strong>state value</strong> — how good is it to just be in state \(s\), regardless of which action you take. \(A(s,a)\) is the <strong>advantage</strong> — how much better is action \(a\) compared to the average action from \(s\). The Q-value is their sum. The mean subtraction \(-\frac{1}{|\mathcal{A}|}\sum A\) ensures identifiability: without it, you could add a constant to \(V\) and subtract it from all \(A\) values without changing Q, making V and A impossible to learn separately.
           </div>
 
-          <h3>Summary</h3>
-          <ul>
-            <li><strong>DQN:</strong> Q-learning + NN + replay + target net. Works on Atari. Overestimates Q.</li>
-            <li><strong>Double DQN:</strong> decouple selection/evaluation. Less overestimation, better performance.</li>
-            <li><strong>Dueling DQN:</strong> split into V+A. Learns state values even from actions that don't matter. Better in large action spaces.</li>
-          </ul>
+          <div class="diagram">
+            <svg viewBox="0 0 520 155">
+              <rect x="20"  y="10"  width="85" height="130" rx="6" class="box"/>
+              <text x="62"  y="70"  class="lbl">Shared</text>
+              <text x="62"  y="84"  class="lbl">CNN/MLP</text>
+              <text x="62"  y="12"  class="lbl-s" style="fill:var(--accent)">DQN</text>
+              <rect x="130" y="55"  width="90"  height="40" rx="6" class="box"/>
+              <text x="175" y="73"  class="lbl">Q(s,a)</text>
+              <text x="175" y="87"  class="lbl-s">one head</text>
+              <line x1="105" y1="75" x2="128" y2="75" class="arr"/>
+
+              <rect x="290" y="10"  width="85" height="130" rx="6" class="box"/>
+              <text x="332" y="70"  class="lbl">Shared</text>
+              <text x="332" y="84"  class="lbl">CNN/MLP</text>
+              <text x="332" y="12"  class="lbl-s" style="fill:var(--success)">Dueling</text>
+              <rect x="400" y="18"  width="105" height="40" rx="6" class="box2"/>
+              <text x="452" y="36"  class="lbl">V(s)</text>
+              <text x="452" y="50"  class="lbl-s">state value head</text>
+              <rect x="400" y="98"  width="105" height="40" rx="6" class="box3"/>
+              <text x="452" y="116" class="lbl">A(s,a)</text>
+              <text x="452" y="130" class="lbl-s">advantage head</text>
+              <line x1="375" y1="55"  x2="398" y2="38"  class="arr"/>
+              <line x1="375" y1="100" x2="398" y2="118" class="arr"/>
+              <text x="452" y="80"  class="lbl-s" style="fill:var(--text-muted)">Q = V + A − mean(A)</text>
+            </svg>
+            <div class="caption">DQN: one Q-head. Dueling: V and A heads combined. Same loss function; better gradient flow.</div>
+          </div>
+
+          <p>The advantage of decomposing Q this way is that in many states, the value of being there matters far more than which specific action you take — especially in states where all actions are roughly equivalent (like driving straight on an empty road). The V head can learn the state's value from those transitions without the A head needing to differentiate between actions. This leads to faster, more robust learning, especially in environments with large action spaces.</p>
 
           <h3>Applications</h3>
-          <p>All three: Atari games, robotic control, trading algorithms. Dueling works especially well in games where many actions have similar effects (navigation games with lots of forward movement).</p>
+          <p>All three variants were benchmarked on the Atari-57 game suite. Dueling + Double DQN achieved state-of-the-art at the time. These architectures are now the standard baseline for discrete-action deep RL tasks: game playing, robotic discrete control, and trading systems.</p>
+
         </div>
       </div>
-    </div><!-- /s5-tab-1 -->
+    </div>
 
     <!-- Q10 -->
     <div class="tab-content" id="s5-tab-2">
       <div class="question-block">
-        <h2 class="q-title">Q10. Discuss Actor-Critic, A2C, and A3C with suitable examples and applications.</h2>
+        <h2 class="q-title">Q10. Discuss Actor-Critic, A2C, and A3C with suitable examples and practical applications.</h2>
         <div class="answer-body">
-          <p><strong>Core idea:</strong> Actor-Critic splits the agent into two parts — the <strong>actor</strong> picks actions, the <strong>critic</strong> evaluates them. The critic's feedback trains the actor. It's the bridge between value-based (DQN) and policy-gradient methods.</p>
 
-          <h3>Actor-Critic</h3>
-          <p>Actor: policy network \(\pi(a|s;\,\theta)\) — outputs a probability over actions.<br>
-          Critic: value network \(V(s;\,\mathbf{w})\) — evaluates how good the current state is.</p>
+          <p>Value-based methods (DQN) learn Q-functions and derive policies implicitly from them. Policy gradient methods optimize the policy directly. Actor-Critic methods do both simultaneously: the <strong>actor</strong> is a policy network that chooses actions, and the <strong>critic</strong> is a value network that evaluates how good those actions were. The critic's feedback reduces the variance of the policy gradient update.</p>
 
-          <p>The advantage \(A(s,a) = r + \gamma V(s') - V(s)\) tells the actor: "was that action better or worse than average?" Then:</p>
+          <h3>The Policy Gradient Problem</h3>
+          <p>A pure policy gradient update is:</p>
           <div class="formula">
-            \[ \nabla_\theta J(\theta) = \mathbb{E}\left[\nabla_\theta \log \pi(a|s;\,\theta)\cdot A(s,a)\right] \]
+            \[ \nabla_\theta J(\theta) = \mathbb{E}\!\left[\nabla_\theta \log \pi(a|s;\,\theta) \cdot G_t\right] \]
           </div>
-          <p>If \(A \gt 0\) (action was better than expected): increase its probability. If \(A \lt 0\): decrease it.</p>
-          <p>Critic loss: \(\mathcal{L}_w = \bigl(r + \gamma V(s';\mathbf{w}) - V(s;\mathbf{w})\bigr)^2\) — standard TD.</p>
+          <p>where \(G_t\) is the actual return from timestep \(t\). The problem is that \(G_t\) has very high variance — it's the sum of many random future rewards. This makes training slow and unstable. The fix is to replace \(G_t\) with the <strong>advantage</strong> \(A(s,a)\), which tells us not just how good the return was in absolute terms, but how much better it was than average:</p>
+          <div class="formula">
+            \[ \nabla_\theta J(\theta) = \mathbb{E}\!\left[\nabla_\theta \log \pi(a|s;\,\theta) \cdot A(s_t,a_t)\right] \]
+          </div>
+          <div class="eq-explain">
+            \(\nabla_\theta \log \pi(a|s;\theta)\) is the direction in parameter space that increases the probability of action \(a\) in state \(s\). We scale that direction by the advantage \(A(s_t,a_t)\). If the advantage is positive (the action was better than expected), we increase the probability of that action. If negative, we decrease it. The critic provides \(A(s,a) = r + \gamma V(s') - V(s)\) using its value estimates.
+          </div>
 
+          <h3>Actor-Critic Architecture</h3>
           <div class="diagram">
             <svg viewBox="0 0 520 130">
-              <!-- Env -->
-              <rect x="20" y="50" width="90" height="45" rx="8" class="box3"/>
+              <rect x="20"  y="50" width="90" height="45" rx="8" class="box3"/>
               <text x="65" y="70" class="lbl">Env</text>
-              <text x="65" y="85" class="lbl-s">s, r, s'</text>
-
-              <!-- Actor -->
-              <rect x="180" y="20" width="130" height="45" rx="8" class="box"/>
-              <text x="245" y="40" class="lbl">Actor π(a|s; θ)</text>
-              <text x="245" y="55" class="lbl-s">picks action a</text>
-
-              <!-- Critic -->
-              <rect x="180" y="80" width="130" height="45" rx="8" class="box2"/>
-              <text x="245" y="100" class="lbl">Critic V(s; w)</text>
-              <text x="245" y="115" class="lbl-s">computes advantage A</text>
-
-              <!-- Env → both -->
-              <line x1="110" y1="58" x2="178" y2="38" class="arr"/>
-              <line x1="110" y1="75" x2="178" y2="98" class="arr"/>
-
-              <!-- Critic → Actor feedback -->
-              <path d="M 245 80 Q 245 68 245 65" class="arr" style="stroke:var(--success)"/>
-              <text x="255" y="73" class="lbl-s" style="fill:var(--success)">A(s,a)</text>
-
-              <!-- Actor → Env -->
-              <rect x="380" y="50" width="110" height="45" rx="8" class="box3"/>
-              <text x="435" y="70" class="lbl">Env</text>
-              <text x="435" y="85" class="lbl-s">takes action a</text>
-              <line x1="310" y1="42" x2="378" y2="62" class="arr"/>
+              <text x="65" y="84" class="lbl-s">s, r, s'</text>
+              <rect x="185" y="18" width="140" height="45" rx="8" class="box"/>
+              <text x="255" y="36" class="lbl">Actor π(a|s; θ)</text>
+              <text x="255" y="51" class="lbl-s">outputs action probabilities</text>
+              <text x="255" y="63" class="lbl-s">updated by policy gradient</text>
+              <rect x="185" y="80" width="140" height="42" rx="8" class="box2"/>
+              <text x="255" y="98" class="lbl">Critic V(s; w)</text>
+              <text x="255" y="112" class="lbl-s">estimates state value</text>
+              <text x="255" y="124" class="lbl-s">updated by TD error</text>
+              <line x1="110" y1="62" x2="183" y2="40" class="arr"/>
+              <line x1="110" y1="74" x2="183" y2="98" class="arr"/>
+              <path d="M 255 80 L 255 65" class="arr" style="stroke:var(--success)"/>
+              <text x="265" y="74" class="lbl-s" style="fill:var(--success)">A(s,a)</text>
+              <rect x="395" y="50" width="110" height="45" rx="8" class="box3"/>
+              <text x="450" y="70" class="lbl">Env takes</text>
+              <text x="450" y="84" class="lbl-s">action a</text>
+              <line x1="325" y1="40" x2="393" y2="62" class="arr"/>
             </svg>
-            <div class="caption">Actor selects actions; Critic evaluates them and feeds advantage back to train Actor.</div>
+            <div class="caption">Actor selects actions; Critic computes advantage and trains Actor. Both learn simultaneously.</div>
           </div>
 
+          <p>The critic is trained with standard TD: \(\mathcal{L}_w = (r + \gamma V(s';\mathbf{w}) - V(s;\mathbf{w}))^2\). The actor is trained with the policy gradient, using the critic's advantage estimate to scale the update. Both networks learn from the same stream of experience.</p>
+
           <h3>A2C — Advantage Actor-Critic (Synchronous)</h3>
-          <p>Run <em>N workers in parallel</em>, each collecting experience from independent environment copies. Wait until all workers finish a rollout, then compute the advantage and update the shared network. Synchronous = deterministic, reproducible.</p>
+          <p>A2C runs \(N\) parallel copies of the environment simultaneously. Each worker collects a rollout (a fixed number of steps), then all workers synchronize — the gradients from all \(N\) workers are averaged, and a single update is applied to the shared network. The synchronization ensures that all workers train on the same network version at all times. This makes training deterministic and reproducible, easier to debug, and well-suited for GPU-based batch computation.</p>
 
-          <h3>A3C — Asynchronous Advantage Actor-Critic</h3>
-          <p>Workers don't wait for each other. Each worker:</p>
+          <h3>A3C — Asynchronous Advantage Actor-Critic (2016)</h3>
+          <p>A3C removes the synchronization barrier. Each of the \(N\) workers independently:</p>
           <ol>
-            <li>Copies the global network weights.</li>
-            <li>Runs for a few steps, computes gradients locally.</li>
-            <li>Asynchronously pushes gradients to the global network.</li>
-            <li>Pulls updated weights and repeats.</li>
+            <li>Copies the current global weights to its local network</li>
+            <li>Runs for a few steps and computes gradients locally using its own experience</li>
+            <li>Pushes its gradients to the global network (which applies them immediately)</li>
+            <li>Pulls the updated global weights and repeats</li>
           </ol>
-          <p>The asynchrony itself acts as a decorrelation mechanism — no replay buffer needed. But it's non-deterministic and harder to reproduce.</p>
-
-          <h3>A2C vs A3C</h3>
-          <ul>
-            <li><strong>A2C</strong> is simpler, more stable, often matches A3C performance on GPU.</li>
-            <li><strong>A3C</strong> was designed for CPU parallelism (many cheap cores). On modern GPUs, A2C is generally preferred.</li>
-          </ul>
+          <p>Workers don't wait for each other — they run asynchronously. This means the global network receives a constant stream of gradient updates from all workers. The asynchrony acts as a natural decorrelation mechanism — different workers are in different parts of the environment, so their gradients are diverse. No replay buffer is needed.</p>
+          <p>The trade-off is that A3C is non-deterministic (workers may apply stale gradients to an already-updated network) and harder to reproduce. On modern GPUs, A2C typically matches or exceeds A3C performance because vectorized environments allow efficient batched computation. A3C was designed for multi-CPU parallelism, which was the bottleneck at the time of its publication.</p>
 
           <h3>Applications</h3>
-          <ul>
-            <li>Continuous control: MuJoCo locomotion (HalfCheetah, Ant)</li>
-            <li>Game playing: StarCraft II (AlphaStar uses actor-critic at its core)</li>
-            <li>Robotics: dexterous manipulation</li>
-          </ul>
+          <p>Actor-Critic methods are the backbone of modern deep RL. A3C was used to learn to play a range of Atari games and navigate 3D environments. The actor-critic framework underpins AlphaStar (StarCraft II), OpenAI Five (Dota 2), and the PPO and SAC algorithms widely used in continuous robotic control today.</p>
+
         </div>
       </div>
-    </div><!-- /s5-tab-2 -->
+    </div>
 
     <!-- Q11 -->
     <div class="tab-content" id="s5-tab-3">
       <div class="question-block">
         <h2 class="q-title">Q11. Explain POMDPs, Belief States, and Belief State Updates with examples.</h2>
         <div class="answer-body">
-          <p><strong>Core idea:</strong> A standard MDP assumes you can observe the true state \(s\) perfectly. A POMDP says: what if you can't? You only get noisy, partial observations. The fix is to maintain a <em>belief</em> — a probability distribution over states — and update it every step.</p>
 
-          <h3>POMDP = MDP + Observations</h3>
-          <p>A POMDP is defined by a 7-tuple: \((\mathcal{S}, \mathcal{A}, \mathcal{O}, T, \Omega, R, \gamma)\)</p>
+          <p>A standard MDP assumes the agent can observe the true state of the environment perfectly at every step. A POMDP relaxes this assumption — the agent only receives a <strong>partial, noisy observation</strong> of the true state. You can't see the full picture; you have to reason about what state you might be in, given everything you've seen so far.</p>
+
+          <h3>POMDP Formal Definition</h3>
+          <p>A POMDP extends an MDP with observations. It is defined by a 7-tuple \((\mathcal{S}, \mathcal{A}, \mathcal{O}, T, \Omega, R, \gamma)\):</p>
           <ul>
-            <li>\(\mathcal{S}\): hidden states</li>
-            <li>\(\mathcal{A}\): actions</li>
-            <li>\(\mathcal{O}\): observations (what you actually see)</li>
-            <li>\(T(s'|s,a)\): transition probability</li>
-            <li>\(\Omega(o|s',a)\): observation probability — how likely is observation \(o\) given new state \(s'\)</li>
-            <li>\(R(s,a)\): reward (depends on true hidden state)</li>
+            <li>\(\mathcal{S}\): the set of hidden states (the agent cannot directly observe these)</li>
+            <li>\(\mathcal{A}\): the set of actions</li>
+            <li>\(\mathcal{O}\): the set of observations (what the agent actually perceives)</li>
+            <li>\(T(s'|s,a)\): transition probability — how the hidden state evolves</li>
+            <li>\(\Omega(o|s',a)\): observation probability — how likely is observation \(o\) given you've transitioned to hidden state \(s'\) via action \(a\)</li>
+            <li>\(R(s,a)\): reward (depends on the hidden state)</li>
+            <li>\(\gamma\): discount factor</li>
           </ul>
 
-          <h3>Belief State</h3>
-          <p>Since we don't observe \(s\), we maintain a distribution \(b(s) = P(\text{current state is } s \mid \text{history})\). This belief <em>is</em> the agent's effective state — it's a sufficient statistic for all past observations.</p>
+          <h3>Belief States</h3>
+          <p>Since the agent can't observe \(s\) directly, it maintains a <strong>belief state</strong> \(b\) — a probability distribution over all possible current hidden states. \(b(s) = P(\text{current state is } s \mid \text{all past observations and actions})\). This belief is a <em>sufficient statistic</em> for the full history — all the information you need to act optimally is encoded in \(b\). This means a POMDP over hidden states can be converted into an MDP over belief states.</p>
 
-          <h3>Belief Update (Bayes Filter)</h3>
-          <p>After taking action \(a\) and observing \(o\):</p>
+          <h3>Belief Update — Bayes Filter</h3>
+          <p>After taking action \(a\) and receiving observation \(o\), the belief is updated using Bayes' theorem:</p>
           <div class="formula">
-            \[ b'(s') = \eta\; \Omega(o \mid s', a) \sum_{s} T(s' \mid s, a)\, b(s) \]
+            \[ b'(s') = \eta\; \Omega(o \mid s', a) \sum_{s \in \mathcal{S}} T(s' \mid s, a)\, b(s) \]
           </div>
-          <ul>
-            <li>\(\eta\) = normalizing constant (so \(b'\) sums to 1)</li>
-            <li>\(\sum_s T(s'|s,a)\,b(s)\) = predicted distribution over \(s'\) after taking \(a\)</li>
-            <li>\(\Omega(o|s',a)\) = likelihood of observation given we're actually in \(s'\)</li>
-          </ul>
-          <p>Read it as: <em>predicted belief × observation likelihood → updated belief</em>.</p>
+          <div class="eq-explain">
+            Breaking this down: \(\sum_s T(s'|s,a)\,b(s)\) is the <em>predicted</em> probability of being in state \(s'\) after taking action \(a\), averaging over all states we might have been in (weighted by our old belief \(b(s)\)). Then \(\Omega(o|s',a)\) multiplies this by how likely the observation \(o\) we actually received is, given we're now in \(s'\). States that are consistent with the observation get their probability boosted; states inconsistent with it get suppressed. Finally, \(\eta\) is a normalizing constant to make the distribution sum to 1.
+          </div>
 
           <h3>Example: Tiger Problem</h3>
-          <p>Tiger is behind one of two doors (Left or Right). You hear a growl to the Left.</p>
+          <p>A tiger is behind one of two doors (Left or Right). You can't see which — you can only listen. Your prior belief: 50% tiger on Left, 50% on Right.</p>
 
           <div class="diagram">
             <svg viewBox="0 0 520 130">
-              <!-- Prior -->
-              <rect x="20" y="30" width="110" height="80" rx="8" class="box"/>
-              <text x="75" y="50" class="lbl">Prior b</text>
-              <rect x="35" y="58" width="35" height="40" rx="3" fill="var(--accent)" opacity="0.6"/>
-              <rect x="75" y="58" width="35" height="40" rx="3" fill="var(--accent)" opacity="0.6"/>
-              <text x="52" y="107" class="lbl-s">Left</text>
-              <text x="92" y="107" class="lbl-s">Right</text>
-              <text x="52" y="74" class="lbl-s" style="fill:var(--text)">0.5</text>
-              <text x="92" y="74" class="lbl-s" style="fill:var(--text)">0.5</text>
-
-              <!-- Arrow -->
-              <line x1="132" y1="70" x2="210" y2="70" class="arr"/>
-              <text x="165" y="60" class="lbl-s">hear growl</text>
-              <text x="165" y="72" class="lbl-s">on LEFT</text>
-
-              <!-- Posterior -->
-              <rect x="215" y="30" width="110" height="80" rx="8" class="box2"/>
-              <text x="270" y="50" class="lbl">Updated b'</text>
-              <rect x="230" y="58" width="35" height="64" rx="3" fill="var(--success)" opacity="0.7"/>
-              <rect x="270" y="58" width="35" height="20" rx="3" fill="var(--success)" opacity="0.4"/>
-              <text x="247" y="107" class="lbl-s">Left</text>
-              <text x="287" y="107" class="lbl-s">Right</text>
-              <text x="247" y="74" class="lbl-s" style="fill:var(--text)">0.85</text>
-              <text x="287" y="74" class="lbl-s" style="fill:var(--text)">0.15</text>
-
-              <!-- Interpretation -->
-              <rect x="355" y="30" width="150" height="80" rx="8" class="box3"/>
-              <text x="430" y="50" class="lbl">Policy on belief</text>
-              <text x="430" y="68" class="lbl-s">if b(left) &gt; 0.8 →</text>
-              <text x="430" y="82" class="lbl-s">open RIGHT door</text>
-              <text x="430" y="97" class="lbl-s">(tiger likely left)</text>
-              <line x1="326" y1="70" x2="353" y2="70" class="arr"/>
+              <rect x="20" y="28" width="115" height="82" rx="8" class="box"/>
+              <text x="77" y="50" class="lbl">Prior b</text>
+              <rect x="35" y="58" width="38" height="42" rx="3" fill="var(--accent)" opacity="0.55"/>
+              <rect x="78" y="58" width="38" height="42" rx="3" fill="var(--accent)" opacity="0.55"/>
+              <text x="54"  y="110" class="lbl-s">Left</text>
+              <text x="97"  y="110" class="lbl-s">Right</text>
+              <text x="54"  y="78"  class="lbl">0.5</text>
+              <text x="97"  y="78"  class="lbl">0.5</text>
+              <line x1="137" y1="68" x2="210" y2="68" class="arr"/>
+              <text x="170" y="57" class="lbl-s">hear growl</text>
+              <text x="170" y="69" class="lbl-s">from LEFT</text>
+              <text x="170" y="81" class="lbl-s">Ω(growl-L|TL)=0.85</text>
+              <rect x="215" y="28" width="115" height="82" rx="8" class="box2"/>
+              <text x="272" y="50" class="lbl">Updated b'</text>
+              <rect x="230" y="58" width="38" height="64" rx="3" fill="var(--success)" opacity="0.65"/>
+              <rect x="273" y="58" width="38" height="18" rx="3" fill="var(--success)" opacity="0.35"/>
+              <text x="249"  y="110" class="lbl-s">Left</text>
+              <text x="292"  y="110" class="lbl-s">Right</text>
+              <text x="249"  y="78"  class="lbl">0.85</text>
+              <text x="292"  y="78"  class="lbl">0.15</text>
+              <line x1="332" y1="68" x2="385" y2="68" class="arr"/>
+              <rect x="388" y="28" width="120" height="82" rx="8" class="box3"/>
+              <text x="448" y="47" class="lbl">Policy on b'</text>
+              <text x="448" y="63" class="lbl-s">b'(Left) = 0.85</text>
+              <text x="448" y="78" class="lbl-s">tiger probably left</text>
+              <text x="448" y="93" class="lbl-s">→ open RIGHT door</text>
+              <text x="448" y="105" class="lbl-s">(safe side)</text>
             </svg>
-            <div class="caption">Belief updates after observing a growl on the left — tiger probably on left, so open the right door.</div>
+            <div class="caption">Hearing a growl from the left updates our belief: 85% tiger on left. We open the right door.</div>
           </div>
 
+          <p>If you hear a growl from the Left side again, the belief updates further — maybe 97% tiger on the left now. If you hear one from the Right, the belief shifts back toward 50/50. The belief tracks everything you know.</p>
+
           <h3>Solving POMDPs</h3>
-          <ul>
-            <li><strong>Exact:</strong> PBVI (Point-Based Value Iteration) — works on belief-space MDPs. Exponential in state size.</li>
-            <li><strong>Approximate:</strong> Use belief as input to a neural network (deep RL); LSTM agents can implicitly maintain belief.</li>
-          </ul>
+          <p>The exact solution to a POMDP is an MDP over the continuous belief-state space. This is solved with <strong>Point-Based Value Iteration (PBVI)</strong> — it samples a finite set of belief points and computes value functions over them. For large state spaces, this is intractable, so approximate methods are used: recurrent neural networks (like LSTMs) can implicitly maintain a belief state through their hidden state, enabling end-to-end learning in partially observable environments without explicitly computing the belief update.</p>
 
           <h3>Applications</h3>
-          <ul>
-            <li>Robotic localization (GPS dropout zones)</li>
-            <li>Medical diagnosis (test results are noisy observations of the true disease state)</li>
-            <li>Dialogue systems (hidden user intent)</li>
-          </ul>
+          <p>POMDPs model robotic localization (GPS dropout, noisy sensors), medical diagnosis (lab results are noisy proxies for the true disease state), dialogue systems (the user's true intent is hidden — you only observe their words), and security tasks where you have incomplete information about the adversary's state.</p>
+
         </div>
       </div>
-    </div><!-- /s5-tab-3 -->
+    </div>
 
     <!-- Q12 -->
     <div class="tab-content" id="s5-tab-4">
       <div class="question-block">
-        <h2 class="q-title">Q12. Discuss Options Framework and MAXQ with examples and practical applications.</h2>
+        <h2 class="q-title">Q12. Discuss Options Framework and MAXQ with suitable examples and applications.</h2>
         <div class="answer-body">
-          <p><strong>Core idea:</strong> Both are <em>hierarchical RL</em> — break a long task into reusable sub-tasks. Instead of choosing a primitive action every millisecond, the agent can commit to a high-level option ("go to the kitchen") that runs for many steps.</p>
+
+          <p>Both Options and MAXQ are <strong>hierarchical RL</strong> approaches. The core motivation is that many real-world tasks have natural sub-task structure — "make coffee" decomposes into "go to kitchen," "fill kettle," "wait for boil," and so on. Instead of learning from raw primitive actions (each millisecond of movement), hierarchical methods let the agent operate at multiple levels of abstraction simultaneously.</p>
 
           <h3>Options Framework</h3>
-          <p>An <strong>option</strong> \(\langle I, \pi, \beta \rangle\) is a temporally extended action:</p>
+          <p>An <strong>option</strong> is a temporally extended action — a sub-policy that runs for multiple timesteps until a termination condition is met. Formally, an option is a triple \(\omega = \langle I, \pi_\omega, \beta \rangle\):</p>
           <ul>
-            <li>\(I \subseteq \mathcal{S}\): <strong>initiation set</strong> — states where this option can start</li>
-            <li>\(\pi: \mathcal{S} \to \mathcal{A}\): <strong>option policy</strong> — what to do while executing this option</li>
-            <li>\(\beta: \mathcal{S} \to [0,1]\): <strong>termination condition</strong> — probability of stopping in each state</li>
+            <li>\(I \subseteq \mathcal{S}\): the <strong>initiation set</strong> — the set of states from which this option can be started</li>
+            <li>\(\pi_\omega : \mathcal{S} \to \mathcal{A}\): the <strong>option policy</strong> — what primitive actions to take while executing this option</li>
+            <li>\(\beta : \mathcal{S} \to [0,1]\): the <strong>termination condition</strong> — the probability of stopping this option in each state</li>
           </ul>
-          <p>Options turn MDPs into <strong>SMDPs</strong> (Semi-MDPs) — actions take variable time. The top-level policy picks options; options internally execute primitive actions.</p>
+          <p>At the top level, the meta-policy picks an option to execute. The chosen option then runs its own policy, taking primitive actions, until it terminates according to \(\beta\). Then the meta-policy picks the next option. This turns the MDP into a <strong>Semi-MDP (SMDP)</strong> — actions happen over variable amounts of time.</p>
 
           <div class="diagram">
-            <svg viewBox="0 0 520 140">
-              <!-- Top level -->
-              <rect x="20" y="10" width="480" height="35" rx="6" class="box"/>
-              <text x="260" y="28" class="lbl">Top-Level Policy</text>
-              <text x="260" y="40" class="lbl-s">picks options (high-level)</text>
-
-              <!-- Options -->
-              <rect x="30"  y="65" width="130" height="45" rx="6" class="box2"/>
-              <text x="95"  y="83" class="lbl">Option 1</text>
-              <text x="95"  y="97" class="lbl-s">"go to kitchen"</text>
-
-              <rect x="195" y="65" width="130" height="45" rx="6" class="box3"/>
-              <text x="260" y="83" class="lbl">Option 2</text>
-              <text x="260" y="97" class="lbl-s">"pick up object"</text>
-
-              <rect x="360" y="65" width="130" height="45" rx="6" class="box4"/>
-              <text x="425" y="83" class="lbl">Option 3</text>
-              <text x="425" y="97" class="lbl-s">"navigate to goal"</text>
-
-              <!-- Arrows down -->
-              <line x1="95"  y1="45" x2="95"  y2="63" class="arr"/>
-              <line x1="260" y1="45" x2="260" y2="63" class="arr"/>
-              <line x1="425" y1="45" x2="425" y2="63" class="arr"/>
-
-              <!-- Primitive actions row -->
-              <text x="260" y="128" class="lbl-s" style="fill:var(--text-muted)">Each option runs primitive actions (up/down/left/right) internally for multiple steps</text>
+            <svg viewBox="0 0 520 145">
+              <rect x="20" y="10" width="480" height="38" rx="7" class="box"/>
+              <text x="260" y="28" class="lbl">Meta-Policy (top level)</text>
+              <text x="260" y="43" class="lbl-s">selects which option to execute next</text>
+              <rect x="28"  y="68" width="138" height="48" rx="7" class="box2"/>
+              <text x="97"  y="87"  class="lbl">Option 1</text>
+              <text x="97"  y="102" class="lbl-s">"navigate to room A"</text>
+              <rect x="191" y="68" width="138" height="48" rx="7" class="box3"/>
+              <text x="260" y="87"  class="lbl">Option 2</text>
+              <text x="260" y="102" class="lbl-s">"pick up object"</text>
+              <rect x="354" y="68" width="138" height="48" rx="7" class="box4"/>
+              <text x="423" y="87"  class="lbl">Option 3</text>
+              <text x="423" y="102" class="lbl-s">"drop off at goal"</text>
+              <line x1="97"  y1="48" x2="97"  y2="66" class="arr"/>
+              <line x1="260" y1="48" x2="260" y2="66" class="arr"/>
+              <line x1="423" y1="48" x2="423" y2="66" class="arr"/>
+              <text x="260" y="135" class="lbl-s" style="fill:var(--text-muted)">each option executes primitive actions (move, grasp, etc.) internally, for variable duration</text>
             </svg>
-            <div class="caption">Two-level hierarchy: top picks options; each option runs its own internal policy to completion.</div>
+            <div class="caption">Two-level hierarchy. Meta-policy picks options; each option runs until its termination condition β fires.</div>
           </div>
 
+          <p>The key advantage of options is <strong>reusability</strong>. If "navigate to room A" is learned as an option, it can be called from any task that requires getting to room A, without re-learning navigation from scratch. Options can also be defined by hand (using domain knowledge) or discovered automatically through subgoal identification algorithms.</p>
+
           <h3>MAXQ Value Decomposition</h3>
-          <p>MAXQ is a specific hierarchical decomposition where each task \(i\) in the hierarchy has its Q-value split into:</p>
+          <p>MAXQ is a specific hierarchical decomposition method that defines a <em>task graph</em> — a hierarchy of tasks where each task can call sub-tasks. MAXQ decomposes the Q-function of any task \(i\) into two parts:</p>
           <div class="formula">
             \[ Q(i, s, a) = V(a, s) + C(i, s, a) \]
           </div>
-          <ul>
-            <li>\(V(a, s)\): the value of completing sub-task \(a\) starting from \(s\) (intrinsic value of the subtask)</li>
-            <li>\(C(i, s, a)\): the "completion" value — additional reward after sub-task \(a\) finishes, from the perspective of parent task \(i\)</li>
-          </ul>
-          <p>This decomposition is recursive: each sub-task may itself contain further sub-tasks.</p>
+          <div class="eq-explain">
+            \(V(a, s)\) is the value of completing sub-task \(a\) starting from state \(s\) — the total expected (discounted) reward that sub-task \(a\) earns on its own. \(C(i, s, a)\) is the "completion" value — the additional reward the parent task \(i\) expects to collect <em>after</em> sub-task \(a\) finishes. Together they sum to the full Q-value from task \(i\)'s perspective. This decomposition is recursive: \(V(a, s)\) can itself be decomposed into its own sub-tasks' Q-values.
+          </div>
 
-          <h3>Example: Taxi Problem</h3>
-          <p>The taxi must pick up a passenger and drop them off. MAXQ hierarchy:</p>
-          <ul>
-            <li><strong>Root:</strong> MaxTaxi → calls Get (pickup) then Put (dropoff)</li>
-            <li><strong>Get:</strong> navigate to passenger → Pickup</li>
-            <li><strong>Put:</strong> navigate to destination → Dropoff</li>
-            <li><strong>Navigate:</strong> primitive moves (N/S/E/W)</li>
-          </ul>
-          <p>Each sub-task is learned independently. The "Navigate" policy is reused by both Get and Put — transfer learning for free.</p>
+          <h3>Taxi Problem: MAXQ in Action</h3>
+          <p>The classic demonstration of MAXQ is the Taxi problem: a taxi must navigate a grid, pick up a passenger from a specified source location, and drop them at a destination.</p>
+          <p>The MAXQ task hierarchy looks like this: the root task <em>MaxTaxi</em> calls two sub-tasks in sequence — <em>Get</em> (pick up the passenger) and <em>Put</em> (drop off the passenger). <em>Get</em> itself calls <em>Navigate</em> (move to the passenger's location) followed by <em>Pickup</em>. <em>Put</em> calls <em>Navigate</em> (to the destination) followed by <em>Dropoff</em>. The <em>Navigate</em> sub-task uses the four primitive movement actions.</p>
+          <p>Notice that <em>Navigate</em> is reused by both <em>Get</em> and <em>Put</em>. Once <em>Navigate</em> is learned, both sub-tasks benefit. This is transfer learning built into the architecture — sub-task policies are trained once and shared wherever that sub-task appears.</p>
 
           <h3>Options vs MAXQ</h3>
-          <ul>
-            <li><strong>Options:</strong> general framework, options can be learned or hand-crafted, flexible termination</li>
-            <li><strong>MAXQ:</strong> specific decomposition technique, recursive Q-decomposition, cleaner theoretical properties</li>
-          </ul>
+          <p>Options is a general framework — it specifies what a hierarchical action looks like (the triple \(\langle I, \pi, \beta \rangle\)) but doesn't prescribe how the value function should be structured. MAXQ is a specific algorithmic approach that decomposes the Q-function recursively, enabling independent learning of sub-tasks and explicit transfer. Options are more flexible; MAXQ provides stronger theoretical structure and better sample efficiency when the task hierarchy is known.</p>
 
           <h3>Applications</h3>
-          <ul>
-            <li>Robot manipulation: reach → grasp → place (three options, each reusable)</li>
-            <li>Navigation with subgoals: room-by-room navigation</li>
-            <li>Game playing: Montezuma's Revenge (sparse reward; options help bridge gaps)</li>
-          </ul>
+          <p>Hierarchical RL is used in robotic manipulation (reach → grasp → place), long-horizon navigation with subgoals, and Atari games with sparse rewards like Montezuma's Revenge where the agent must complete dozens of sub-tasks before any reward arrives. It's also being applied to multi-step reasoning in language models, where subtask decomposition mirrors chain-of-thought planning.</p>
+
         </div>
       </div>
-    </div><!-- /s5-tab-4 -->
+    </div>
 
   </div><!-- /s5 -->
 
@@ -1128,15 +963,10 @@
     document.getElementById(id).classList.add('active');
     btn.classList.add('active');
   }
-
   function showTab(section, i) {
     const panel = document.getElementById(section);
-    panel.querySelectorAll('.tab-content').forEach((el, idx) => {
-      el.classList.toggle('active', idx === i);
-    });
-    panel.querySelectorAll('.tab-btn').forEach((btn, idx) => {
-      btn.classList.toggle('active', idx === i);
-    });
+    panel.querySelectorAll('.tab-content').forEach((el, idx) => el.classList.toggle('active', idx === i));
+    panel.querySelectorAll('.tab-btn').forEach((btn, idx) => btn.classList.toggle('active', idx === i));
   }
 </script>
 </body>
